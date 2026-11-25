@@ -224,7 +224,7 @@ def rank_what_if_sp_candidates(
 ) -> dict[str, object]:
     """Rank advisory SP candidates while keeping all 23 PV/sensor features and Part fixed.
 
-    Follows ACADEMIC_EVIDENCE_FOR_SP_APPROVAL.md:
+    Follows docs/setpoint_constraints_and_methodology_theme3.md:
     1. Single-SP sensitivity grid within intersection of envelope and training support (q01-q99).
     2. Historical empirical good-batch SP combinations observed for the same Part in training data.
     """

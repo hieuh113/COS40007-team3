@@ -69,7 +69,7 @@ Phan loai hien tai:
 - `low_bad`: được tạo từ các dòng trong `low bad.csv`; file nguồn không cung cấp quy trình đo lab, phương thức kiểm tra, ngưỡng hoặc logic nghiệp vụ.
 - `high_bad`: duoc tao tu cac dong trong `high bad.csv`; file nguon khong cung cap tiep tuc dinh nghia nghiep vu.
 
-Trạng thái: `APPROVED_WITH_CONDITIONS` (trong phạm vi đồ án học thuật COS40007; provenance đã được xác nhận cho 702/703 batch và được khóa hồ sơ tại [`QUALITY_LABEL_CONFIRMATION_REQUEST.md`](QUALITY_LABEL_CONFIRMATION_REQUEST.md)). Định nghĩa SOP phòng Lab ngoài nhà máy được ghi nhận là giới hạn dữ liệu (`NOT_AVAILABLE_IN_COURSE_DATASET`).
+Trạng thái: `APPROVED_WITH_CONDITIONS` (trong phạm vi đồ án học thuật COS40007; provenance đã được xác nhận cho 702/703 batch và được trình bày chi tiết tại [`quality_label_governance_theme3.md`](quality_label_governance_theme3.md)). Định nghĩa SOP phòng Lab ngoài nhà máy được ghi nhận là giới hạn dữ liệu (`NOT_AVAILABLE_IN_COURSE_DATASET`).
 
 Batch `97_2020_06_25` là tập xung đột nhãn: xuất hiện trong cả `good.csv` và `low bad.csv`, với 36 dòng SP/PV giống nhau cho mỗi nhãn. `output_log.csv` ghi cả hai nhãn cho batch này nhưng không giải quyết xung đột. Hồ sơ dự án đã chốt quyết định chính thức **`QUARANTINE_UNRESOLVED`**: cách ly vĩnh viễn toàn bộ 72 dòng của batch này khỏi tập Train/Validation/Test; không biểu quyết, không suy nhãn từ mô hình và không dùng nhãn thay thế.
 

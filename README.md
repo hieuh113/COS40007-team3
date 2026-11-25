@@ -46,16 +46,14 @@ The system addresses two core operational questions:
 ├── verify_demonstrator_theme3.py         # Automated 6-scenario regression check for the Demonstrator
 ├── approved_operating_bounds.template.json # Template for plant-authorized SP bounds sign-off
 ├── requirements-theme3.txt               # Python dependencies for the Theme 3 pipeline & Streamlit UI
-├── docs/                                 # Project specification, data dictionary, audit & governance records
+├── docs/                                 # Project specification, data dictionary, audit & methodology reports
 │   ├── PROJECT_SPECIFICATION_DEFINITION_THEME3_VI.md
 │   ├── RESEARCH_BACKGROUND_THEME3_UAV_VI.md
-│   ├── ACADEMIC_EVIDENCE_FOR_SP_APPROVAL.md
 │   ├── data_dictionary_theme3.md
 │   ├── data_audit_theme3.md
 │   ├── field_confirmation_register.csv
-│   ├── QUALITY_LABEL_CONFIRMATION_REQUEST.md
-│   ├── QUALITY_LABEL_WORK_COMPLETION_STATUS.md
-│   └── SP_BOUNDS_CONFIRMATION_REQUEST.md
+│   ├── quality_label_governance_theme3.md
+│   └── setpoint_constraints_and_methodology_theme3.md
 ├── reports/                              # Reproducible evaluation tables, JSON manifests, and PNG figures
 │   ├── preprocessing_manifest.json
 │   ├── eda_baseline/
