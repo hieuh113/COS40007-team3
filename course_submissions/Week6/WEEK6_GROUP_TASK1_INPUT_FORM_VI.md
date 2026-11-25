@@ -93,7 +93,7 @@ Luồng cốt lõi đề xuất:
 (quality estimate, SP ranking, downtime/anomaly, bằng chứng và trạng thái không đủ dữ liệu)
 → **Human review**.
 
-**Lưu ý dữ liệu đã biết:** workspace có dữ liệu chất lượng, downtime, Infinity và trend; chưa thấy ảnh/video UAV. Không đưa UAV vào luồng cốt lõi trừ khi nhóm xác nhận có nguồn ảnh hợp lệ. Không đưa UAV vào vì chưa xác định hướng đi cho UAV, chỉ nêu optional
+**Lưu ý dữ liệu đã biết:** workspace có đầy đủ dữ liệu chất lượng (`good`, `low_bad`, `high_bad`), nhật ký downtime, dữ liệu sản xuất Infinity và các tệp trend tần suất cao (`Evaporator` và `FFTE`).
 
 ### Nhóm cần xác nhận/điền
 

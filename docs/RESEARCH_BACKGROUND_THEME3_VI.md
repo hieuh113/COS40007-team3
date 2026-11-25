@@ -1,22 +1,21 @@
 # CƠ SỞ NGHIÊN CỨU VÀ TÀI LIỆU THAM KHẢO
 
-## Dự án Theme 3: AI hỗ trợ giám sát sản xuất Vegemite bằng dữ liệu quy trình và camera UAV
+## Dự án Theme 3: AI hỗ trợ giám sát chất lượng, khuyến nghị setpoint và phát hiện bất thường trong sản xuất Vegemite
 
 **Ngày biên soạn:** 14/10/2026  
 
-> **Lưu ý về phạm vi bằng chứng:** Các công trình dưới đây cung cấp nền tảng và ví dụ nghiên cứu trong những lĩnh vực liên quan. Chúng không chứng minh rằng một mô hình cụ thể sẽ hoạt động tốt trên dữ liệu Vegemite, rằng các giới hạn SP cụ thể là an toàn, hoặc rằng camera UAV có thể nhận diện một tình trạng chưa được xác định và đánh giá trong bối cảnh nhà máy của dự án.
+> **Lưu ý về phạm vi bằng chứng:** Các công trình dưới đây cung cấp nền tảng và ví dụ nghiên cứu trong những lĩnh vực liên quan. Chúng không chứng minh rằng một mô hình cụ thể sẽ hoạt động tốt trên dữ liệu Vegemite hoặc rằng các giới hạn SP cụ thể trong tài liệu học thuật là giới hạn vận hành an toàn của nhà máy.
 
 ## 1. Tóm tắt
 
-Theme 3 đặt ra ba mục tiêu phân tích chính từ dữ liệu sản xuất: dự đoán lớp chất lượng, đề xuất giá trị SP và phát hiện/dự đoán downtime. Việc bổ sung UAV nên được hiểu là thêm một **nguồn quan sát bằng hình ảnh** cho các điều kiện nhìn thấy được, không thay thế dữ liệu cảm biến và không biến UAV thành bộ điều khiển máy móc.
+Theme 3 đặt ra ba mục tiêu phân tích chính từ dữ liệu sản xuất: dự đoán lớp chất lượng, đề xuất giá trị cài đặt máy (Setpoint — SP) và phát hiện bất thường / đánh giá nguy cơ downtime.
 
 Tài liệu nghiên cứu cho thấy các mục tiêu này có liên hệ nhưng không đồng nhất:
 
-1. **Dự đoán chất lượng** là bài toán học từ đầu vào quy trình để ước lượng kết quả chất lượng.
-2. **Đề xuất SP** là bước hỗ trợ quyết định, phải có mục tiêu và giới hạn vận hành được xác nhận; không thể chỉ đổi tên đầu ra của mô hình phân loại thành “khuyến nghị”.
-3. **Phát hiện bất thường** tìm trạng thái khác thường; điều đó không tự động có nghĩa là máy sẽ dừng.
-4. **Dự đoán downtime** cần nhãn sự kiện, dữ liệu theo thời gian đáng tin cậy và khoảng cảnh báo được định nghĩa.
-5. **Camera UAV** có thể hỗ trợ kiểm tra trực quan trong một số bối cảnh, nhưng cần hình ảnh phù hợp, quyền thu thập, nhãn và đánh giá riêng.
+1. **Dự đoán chất lượng** là bài toán học từ đầu vào quy trình để ước lượng kết quả chất lượng (`good`, `low_bad`, `high_bad`).
+2. **Đề xuất SP** là bước hỗ trợ quyết định (prescriptive analytics), phải có mục tiêu và giới hạn vận hành được xác nhận; không thể chỉ đổi tên đầu ra của mô hình phân loại thành “khuyến nghị”.
+3. **Phát hiện bất thường (Anomaly detection)** tìm trạng thái cảm biến khác thường theo từng hệ thống máy (`FFTE`, `TFE`, `Extract Tank`); điều đó không tự động đồng nghĩa với xác suất máy dừng.
+4. **Dự đoán downtime có giám sát** cần nhãn sự kiện, dữ liệu theo thời gian đáng tin cậy và khoảng cảnh báo (prediction horizon) được định nghĩa rõ ràng.
 
 ## 2. Dự đoán chất lượng trong sản xuất
 
@@ -24,9 +23,9 @@ Tercan và Meisen tổng hợp có hệ thống các phương pháp machine lear
 
 ### Liên hệ với dự án
 
-- Có cơ sở để khảo sát mô hình phân loại trên dữ liệu cảm biến/SP, sau khi xác nhận định nghĩa nhãn `good`, `low_bad` và `high_bad`.
+- Có cơ sở để khảo sát mô hình phân loại trên dữ liệu cảm biến/SP, sau khi xác nhận quy tắc gán nhãn `good`, `low_bad` và `high_bad`.
 - Nên lập baseline trước khi so sánh các mô hình phức tạp, báo cáo metric theo từng lớp và kiểm tra khả năng tổng quát hóa theo batch/thời gian.
-- Ví dụ ở ngành khác chỉ có giá trị tham khảo về phương pháp. Chúng không xác nhận đặc trưng nào có ý nghĩa trong sản xuất Vegemite.
+- Ví dụ ở ngành khác chỉ có giá trị tham khảo về phương pháp. Chúng không xác nhận đặc trưng nào có ý nghĩa nhân quả trong sản xuất Vegemite.
 - Dữ liệu gần nhau trong một batch hoặc theo thời gian có thể khiến chia ngẫu nhiên theo từng hàng đánh giá quá lạc quan; cách chia phải phù hợp cấu trúc batch và thời gian.
 
 ## 3. Từ dự đoán sang đề xuất setpoint
@@ -38,10 +37,10 @@ Bertsimas và Kallus nghiên cứu mối liên hệ giữa predictive analytics 
 Một quy trình đề xuất SP có trách nhiệm cần:
 
 1. Chọn mục tiêu rõ ràng, chẳng hạn xếp hạng ứng viên theo xác suất dự đoán lớp `good`.
-2. Giữ cố định các biến trạng thái không điều khiển được tại thời điểm tư vấn.
-3. Chỉ tạo ứng viên SP trong giới hạn vận hành được xác nhận bởi tài liệu hoặc chuyên gia có thẩm quyền.
-4. So sánh ứng viên với SP hiện tại và trình bày mức thay đổi, điểm mô hình cùng giới hạn.
-5. Từ chối đề xuất khi thiếu giới hạn đã duyệt, đầu vào không hợp lệ hoặc trạng thái nằm ngoài miền dữ liệu.
+2. Giữ cố định các biến trạng thái không điều khiển được (23 biến PV và loại `Part`) tại thời điểm tư vấn.
+3. Chỉ tạo ứng viên SP trong miền vận hành được hỗ trợ.
+4. So sánh ứng viên với SP hiện tại và trình bày mức thay đổi ($\Delta \text{SP}$), điểm mô hình cùng giới hạn.
+5. Từ chối đề xuất vận hành khi thiếu giới hạn đã duyệt, đầu vào không hợp lệ hoặc trạng thái nằm ngoài miền dữ liệu.
 
 Đây vẫn là khuyến nghị dựa trên mô hình quan sát. Dữ liệu lịch sử và xác suất dự đoán không tự chứng minh rằng thay đổi SP sẽ gây ra cải thiện chất lượng. Vì vậy, kết quả cần được chuyên gia xem xét; không được trình bày như lệnh điều khiển hay bằng chứng nhân quả.
 
@@ -51,66 +50,42 @@ Carvalho và cộng sự tổng quan các phương pháp machine learning trong 
 
 ### Cần phân biệt ba loại đầu ra
 
-| Khái niệm | Câu hỏi chính | Yêu cầu dữ liệu |
+| Khái niệm | Mục tiêu phân tích | Yêu cầu dữ liệu |
 |---|---|---|
-| Phát hiện bất thường | Trạng thái hiện tại có khác với mẫu thường thấy không? | Chuỗi cảm biến và định nghĩa/giả định về trạng thái bình thường; có thể không cần nhãn downtime. |
-| Phân loại hoặc dự đoán downtime | Sự kiện dừng có xảy ra trong khoảng thời gian xác định không? | Nhãn sự kiện đủ tin cậy, timestamp, ánh xạ máy/hệ thống và dữ liệu trước sự kiện. |
-| Bảo trì dự đoán | Khi nào thiết bị có thể cần can thiệp/bảo trì? | Dữ liệu lỗi hoặc bảo trì và quy tắc đánh giá phù hợp với mục tiêu bảo trì. |
+| Phát hiện bất thường | Xác định trạng thái cảm biến hiện tại có lệch khỏi mẫu thường thấy không | Chuỗi cảm biến và định nghĩa/giả định về trạng thái bình thường; có thể không cần nhãn downtime. |
+| Phân loại hoặc dự đoán downtime | Ước lượng sự kiện dừng máy có xảy ra trong khoảng thời gian xác định không | Nhãn sự kiện đủ tin cậy, timestamp, ánh xạ máy/hệ thống và dữ liệu trước sự kiện. |
+| Bảo trì dự đoán | Xác định thời điểm thiết bị cần can thiệp/bảo trì | Dữ liệu lỗi hoặc bảo trì và quy tắc đánh giá phù hợp với mục tiêu bảo trì. |
 
 ### Liên hệ với dự án
 
-- Dữ liệu downtime Theme 3 được mô tả là chỉ có trong tháng 5–6/2020. Cần kiểm tra số lượng sự kiện và mức độ đầy đủ trước khi quyết định có huấn luyện dự đoán downtime hay không.
+- Dữ liệu downtime Theme 3 chỉ có trong tháng 5–6/2020 (218 dòng). Cần kiểm tra số lượng sự kiện và mức độ đầy đủ trước khi quyết định có huấn luyện dự đoán downtime có giám sát hay không.
 - Không có bản ghi downtime không đồng nghĩa chắc chắn với “bình thường”; phải biết nhật ký có ghi đầy đủ các sự kiện hay không.
-- Nếu dữ liệu không đủ cho dự đoán có giám sát, có thể báo cáo phân tích bất thường như một nhánh riêng, nhưng không gọi đó là dự đoán shutdown đã được xác nhận.
-- Khi có nhãn và timestamp phù hợp, nên định nghĩa trước khoảng dự đoán/lead time; đánh giá cả cảnh báo sai, khả năng phát hiện sự kiện và thời gian cảnh báo.
-- Do sự kiện downtime thường ít hơn quan sát bình thường, accuracy đơn lẻ có thể gây hiểu nhầm. Cần xem precision/recall, PR-AUC khi phù hợp và số cảnh báo sai theo thời gian hoặc batch.
+- Khi dữ liệu sự kiện không đủ cho dự đoán có giám sát, hệ thống báo cáo phân tích bất thường như một nhánh riêng (Robust Z-score theo từng cụm thiết bị `FFTE`, `TFE`, `Extract Tank` và trên dữ liệu Trend), nhưng không gọi đó là xác suất shutdown đã được xác nhận.
+- Do sự kiện bất thường hiếm hơn quan sát bình thường, accuracy đơn lẻ có thể gây hiểu nhầm. Cần xem precision/recall, PR-AUC khi phù hợp và số cảnh báo sai theo thời gian hoặc batch.
 
-## 5. UAV và thị giác máy tính trong kiểm tra công nghiệp
+## 5. Phạm vi bằng chứng dữ liệu và lựa chọn thiết kế
 
-Nooralishahi và cộng sự tổng quan kiểm tra không phá hủy cơ sở công nghiệp bằng drone và đưa ra các nghiên cứu trường hợp [8]. Al Radi và cộng sự nghiên cứu kiểm tra bằng thị giác hoạt động của flare stack với UAV; bài báo mô tả phát hiện ngọn lửa/khói trong bối cảnh được nghiên cứu [9]. Đây là ví dụ về UAV như nền tảng đưa camera tới vị trí quan sát, chứ không phải bằng chứng cho mọi loại nhà máy hoặc mọi tình trạng sản xuất.
+Các tài liệu nghiên cứu hỗ trợ tính hợp lý của phương pháp mô hình hóa và kiểm định, đồng thời định hướng giải quyết các đặc thù của bộ dữ liệu dự án:
 
-Redmon và cộng sự giới thiệu YOLO, một phương pháp phát hiện đối tượng một giai đoạn [10]. Đây là công trình nền tảng về object detection, có thể dùng để giải thích một họ kỹ thuật được cân nhắc cho phân tích ảnh. Nó không phải mô hình đã được huấn luyện hoặc kiểm định trên hình ảnh UAV của dự án.
+1. Định nghĩa và truy vết ba lớp `good`, `low_bad` và `high_bad`, đồng thời cách ly batch xung đột nhãn (`97_2020_06_25`).
+2. Xác định rõ 30 cột SP/PV có sẵn tại thời điểm dự đoán và kiểm soát ranh giới miền dữ liệu (`feature_domain`).
+3. Phân tích nhật ký downtime (218 dòng) và dữ liệu trend tần suất cao (`Evaporator` và `FFTE`) để tách biệt rõ cổng kiểm tra mức sẵn sàng dữ liệu với sàng lọc ngoại lai thống kê.
 
-### Liên hệ với dự án
+Do đó, nghiên cứu được dùng để **biện minh cho lựa chọn phương pháp và cách đánh giá**, kết hợp chặt chẽ với kiểm toán dữ liệu thực nghiệm trước khi đóng băng mô hình.
 
-- UAV bổ sung **bằng chứng thị giác** cho những tình trạng nhìn thấy được trong trường quan sát, ví dụ khói hoặc vật cản nếu chuyên gia xác nhận chúng phù hợp với quy trình.
-- Camera không thay thế sensor/PV trong việc đo trạng thái bên trong máy và không trực tiếp đo độ đặc sản phẩm.
-- Cần xác định trước khu vực camera có thể quan sát, điều kiện ánh sáng/góc nhìn, nhãn hình ảnh và cách phân chia tập đánh giá.
-- Nếu dùng video, chia train/test theo phiên ghi hình hoặc thời gian khi phù hợp để tránh các khung hình gần như giống nhau xuất hiện ở cả hai tập.
-- Cần có phê duyệt về an toàn, quyền riêng tư và quyền lưu trữ hình ảnh trước khi thu thập dữ liệu tại địa điểm thật.
-- Nếu chưa có ảnh được phép và được gán nhãn, chỉ nên trình bày thiết kế tích hợp hoặc bản minh họa chưa kiểm định, không công bố hiệu năng phát hiện.
-
-## 6. Khoảng trống nghiên cứu và lựa chọn thiết kế
-
-Các tài liệu được xem xét hỗ trợ tính hợp lý của từng hướng công nghệ, nhưng chưa giải quyết các câu hỏi đặc thù của dự án:
-
-1. Các lớp `good`, `low_bad` và `high_bad` được định nghĩa chính xác như thế nào, và có batch nào xuất hiện trong nhiều lớp không?
-2. Những cột SP/PV nào thực sự có thể dùng tại thời điểm dự đoán, đơn vị là gì và giới hạn vận hành nào đã được phê duyệt?
-3. Nhật ký downtime có ghi đầy đủ sự kiện không, các sự kiện được ánh xạ ra sao tới `FFTE`, `TFE`, `Extract Tank` hoặc thiết bị liên quan, và dữ liệu có đủ cho một chân trời dự đoán cụ thể không?
-4. Có hình ảnh UAV nào sẵn có, được phép sử dụng và gán nhãn cho các tình trạng phù hợp không?
-5. Timestamp hình ảnh có thể đồng bộ đáng tin cậy với batch, cảm biến và sự kiện downtime không?
-
-Do đó, nghiên cứu nên được dùng để **biện minh cho lựa chọn phương pháp và cách đánh giá**, chứ không để điền thay các thông tin còn thiếu của dữ liệu dự án. Kế hoạch thực nghiệm cần xác minh dữ liệu trước khi chốt mô hình, nhãn, giới hạn SP hoặc tuyên bố hiệu năng.
-
-## 7. Cách áp dụng tài liệu nghiên cứu vào dự án
+## 6. Cách áp dụng tài liệu nghiên cứu vào dự án
 
 - Dùng [1]–[3] trong phần nền tảng về dự đoán chất lượng và sản xuất dựa trên dữ liệu.
 - Dùng [4] để giải thích vì sao đề xuất SP là bước prescriptive analytics riêng, cần giới hạn và sự xem xét của chuyên gia.
 - Dùng [5]–[7] để định nghĩa và phân biệt bảo trì dự đoán, dự đoán downtime và phát hiện bất thường.
-- Dùng [8]–[9] để biện minh cho việc khảo sát UAV như nền tảng quan sát/kiểm tra trực quan trong bối cảnh công nghiệp.
-- Dùng [10] như nguồn nền tảng về object detection, không như bằng chứng hiệu năng trên dữ liệu dự án.
 - Dùng [11]–[14] để biện minh cho metric lớp thiểu số, đánh giá calibration và scoring rule khi đầu ra xác suất được sử dụng.
 - Dùng [15]–[16] để giải thích lựa chọn kiểm định ngoài mẫu theo thời gian; kết hợp với chia nhóm theo batch theo yêu cầu dữ liệu dự án.
 - Dùng [17] để nhấn mạnh việc xác minh ý nghĩa, đơn vị và thời điểm sẵn có của biến quy trình/soft sensor.
 - Dùng [18]–[19] để tách bài toán dự đoán khỏi mục tiêu quyết định và suy luận nhân quả khi xếp hạng SP.
 - Dùng [20]–[21] để định hướng đánh giá cảnh báo theo chuỗi thời gian/sự kiện, không chỉ từng hàng dữ liệu.
-- Dùng [22] để yêu cầu xem xét chất lượng thu nhận ảnh trước khi đánh giá thị giác UAV.
 - Khi viết báo cáo, trích dẫn các nghiên cứu đúng phạm vi; nêu rõ khác biệt về ngành, thiết bị, dữ liệu và điều kiện thử nghiệm.
-- Không tuyên bố mô hình tốt hơn hay khuyến nghị an toàn nếu chưa có đánh giá trên tập kiểm định phù hợp và giới hạn được xác nhận.
 
-## 8. Tài liệu tham khảo có chú giải
-
-Các mục [1]–[10] dưới đây là bộ tài liệu nền ban đầu; [11]–[22] bổ sung đánh giá mất cân bằng, kiểm định theo thời gian, quyết định SP, downtime/anomaly và chất lượng dữ liệu ảnh; [23]–[47] mở rộng batch, calibration, process monitoring và causal readiness; [48]–[57] bổ sung bằng chứng trực tiếp cho lựa chọn mô hình tabular. Các nguồn bổ sung không xác nhận hiệu năng trên dữ liệu của dự án.
+## 7. Tài liệu tham khảo có chú giải
 
 ### Dự đoán chất lượng và sản xuất dựa trên dữ liệu
 
@@ -138,7 +113,7 @@ DOI: [10.1016/j.jmsy.2018.01.006](https://doi.org/10.1016/j.jmsy.2018.01.006)
 DOI: [10.1287/mnsc.2018.3253](https://doi.org/10.1287/mnsc.2018.3253)  
 **Loại nguồn:** Nghiên cứu phương pháp/khung phân tích.  
 **Giá trị sử dụng:** Cơ sở khái niệm cho việc dùng dự đoán để hỗ trợ lựa chọn quyết định, giúp phân biệt dự đoán chất lượng với tối ưu/đề xuất SP.  
-**Giới hạn:** Không cung cấp giới hạn vận hành hay bằng chứng tác động nhân quả cho thiết bị của dự án. Trích dẫn theo thông tin tập/số năm 2020.
+**Giới hạn:** Không cung cấp giới hạn vận hành hay bằng chứng tác động nhân quả cho thiết bị của dự án.
 
 ### Bảo trì dự đoán và phát hiện bất thường
 
@@ -160,26 +135,6 @@ DOI: [10.1109/ACCESS.2023.3349132](https://doi.org/10.1109/ACCESS.2023.3349132)
 **Giá trị sử dụng:** Cung cấp bối cảnh về phát hiện bất thường và giúp phân biệt nhánh không giám sát với dự đoán downtime có nhãn.  
 **Giới hạn:** Tổng quan không xác nhận độ chính xác trên dữ liệu dự án; học chuyển giao không loại bỏ khác biệt giữa cảm biến/dây chuyền.
 
-### UAV và thị giác máy tính
-
-**[8] Nooralishahi, P. et al. (2021).** “Drone-Based Non-Destructive Inspection of Industrial Sites: A Review and Case Studies.” *Drones*, 5(4), 106.  
-DOI: [10.3390/drones5040106](https://doi.org/10.3390/drones5040106)  
-**Loại nguồn:** Tổng quan và nghiên cứu trường hợp.  
-**Giá trị sử dụng:** Nền tảng cho UAV như phương tiện thu nhận hình ảnh phục vụ kiểm tra trực quan cơ sở công nghiệp.  
-**Giới hạn:** Bối cảnh công nghiệp/hạ tầng khác nhà máy cụ thể của dự án; không xác định tình trạng nào có thể nhận diện từ camera của dự án.
-
-**[9] Al Radi, M. et al. (2022).** “Vision-based Inspection of Flare Stacks Operation Using a Visual Servoing Controlled Autonomous Unmanned Aerial Vehicle (UAV).” *IECON 2022 – 48th Annual Conference of the IEEE Industrial Electronics Society*, 1–6.  
-DOI: [10.1109/IECON49645.2022.9968467](https://doi.org/10.1109/IECON49645.2022.9968467)  
-**Loại nguồn:** Nghiên cứu trường hợp kiểm tra trực quan bằng UAV.  
-**Giá trị sử dụng:** Ví dụ về phân tích hình ảnh UAV để giám sát tình trạng nhìn thấy được trong một bối cảnh công nghiệp.  
-**Giới hạn:** Bài nghiên cứu về flare stack, không phải sản xuất thực phẩm; phần xác nhận được mô tả trong tóm tắt liên quan mô phỏng nhà máy hóa dầu. Không suy ra dự án cần điều khiển UAV tự động.
-
-**[10] Redmon, J., Divvala, S., Girshick, R. & Farhadi, A. (2016).** “You Only Look Once: Unified, Real-Time Object Detection.” *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 779–788.  
-DOI: [10.1109/CVPR.2016.91](https://doi.org/10.1109/CVPR.2016.91) · [Bản ghi chính thức CVF](https://openaccess.thecvf.com/content_cvpr_2016/html/Redmon_You_Only_Look_CVPR_2016_paper.html)  
-**Loại nguồn:** Công trình phương pháp nền tảng về object detection.  
-**Giá trị sử dụng:** Tham khảo khi giới thiệu họ phương pháp YOLO được cân nhắc cho phát hiện đối tượng/tình trạng nhìn thấy trong ảnh.  
-**Giới hạn:** Không phải mô hình đã được huấn luyện/đánh giá trên ảnh UAV hoặc ảnh nhà máy của dự án; cần dữ liệu và kiểm định riêng.
-
 ### Đánh giá phân loại mất cân bằng và xác suất
 
 **[11] He, H. & Garcia, E. A. (2009).** “Learning from Imbalanced Data.” *IEEE Transactions on Knowledge and Data Engineering*, 21(9), 1263–1284.  
@@ -189,7 +144,7 @@ DOI: [10.1109/TKDE.2008.239](https://doi.org/10.1109/TKDE.2008.239)
 **Giới hạn:** Không chứng minh kỹ thuật cân bằng cụ thể nào sẽ cải thiện kết quả trên bộ dữ liệu này.
 
 **[12] Saito, T. & Rehmsmeier, M. (2015).** “The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets.” *PLOS ONE*, 10(3), e0118432.  
-DOI: [10.1371/journal.pone.0118432](https://doi.org/10.1371/journal.pone.0118432) · [Bài báo của nhà xuất bản](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432)  
+DOI: [10.1371/journal.pone.0118432](https://doi.org/10.1371/journal.pone.0118432)  
 **Loại nguồn:** Nghiên cứu phương pháp với mô phỏng và phân tích lại dữ liệu.  
 **Giá trị sử dụng:** Hỗ trợ bổ sung precision-recall cho lớp thiểu số `low_bad`; với bài toán ba lớp, báo cáo từng lớp theo one-vs-rest và nêu rõ cách tổng hợp.  
 **Giới hạn:** So sánh chính của bài báo tập trung vào phân loại nhị phân, không quy định cách tổng hợp tối ưu cho bài toán đa lớp này.
@@ -240,7 +195,7 @@ DOI: [10.1214/09-SS057](https://doi.org/10.1214/09-SS057)
 **Giá trị sử dụng:** Hỗ trợ phân biệt liên hệ dự đoán từ dữ liệu quan sát với kết luận rằng thay đổi SP gây ra thay đổi chất lượng; kết luận nhân quả đòi hỏi giả định và thiết kế xác nhận thích hợp.  
 **Giới hạn:** Khung tổng quát, không phân tích yếu tố gây nhiễu cụ thể của quy trình dự án.
 
-### Đánh giá bất thường theo thời gian và kiểm tra UAV
+### Đánh giá bất thường theo chuỗi thời gian
 
 **[20] Hwang, W.-S., Yun, J.-H., Kim, J. & Kim, H. C. (2019).** “Time-Series Aware Precision and Recall for Anomaly Detection.” Bài báo trong kỷ yếu ACM, 2241–2244.  
 DOI: [10.1145/3357384.3358118](https://doi.org/10.1145/3357384.3358118)  
@@ -254,13 +209,7 @@ DOI: [10.1109/ICMLA.2015.141](https://doi.org/10.1109/ICMLA.2015.141)
 **Giá trị sử dụng:** Nhấn mạnh tính kịp thời và cảnh báo sai khi đánh giá cảnh báo streaming; gợi ý báo missed events, false alerts và warning time khi có timestamp sự kiện đáng tin cậy.  
 **Giới hạn:** Benchmark không phải nghiên cứu downtime sản xuất; không áp dụng máy móc scoring rule nếu chưa phù hợp yêu cầu vận hành.
 
-**[22] Morgenthal, G. & Hallermann, N. (2014).** “Quality Assessment of Unmanned Aerial Vehicle (UAV) Based Visual Inspection of Structures.” *Advances in Structural Engineering*, 17(3), 289–302.  
-DOI: [10.1260/1369-4332.17.3.289](https://doi.org/10.1260/1369-4332.17.3.289)  
-**Loại nguồn:** Nghiên cứu đánh giá kiểm tra trực quan bằng UAV.  
-**Giá trị sử dụng:** Hỗ trợ ghi nhận chất lượng thu nhận ảnh và điều kiện góc nhìn, khoảng cách, ánh sáng, chuyển động trước khi đánh giá mô hình thị giác.  
-**Giới hạn:** Nghiên cứu trên kết cấu dân dụng, không xác nhận các nhãn hoặc điều kiện hình ảnh của dây chuyền thực phẩm.
-
-## 9. Phụ lục tài liệu bổ sung [23]–[47]
+## 8. Phụ lục tài liệu bổ sung [23]–[47]
 
 Phụ lục này bổ sung các nguồn trực tiếp hỗ trợ kiểm định theo batch/thời gian, calibration, lớp thiểu số, batch-process control, predictive maintenance và false alarms. Các nguồn chỉ được dùng như căn cứ phương pháp hoặc khung đánh giá; không chuyển thành evidence về giới hạn vận hành Vegemite.
 
@@ -284,13 +233,13 @@ DOI: [10.1016/j.is.2019.01.006](https://doi.org/10.1016/j.is.2019.01.006)
 
 **[27] Hespeler, S. C., Moriano, P., Li, M. & Hollifield, S. C. (2025).** “Temporal cross-validation impacts multivariate time series subsequence anomaly detection evaluation.” Preprint.  
 DOI: [10.48550/arXiv.2506.12183](https://doi.org/10.48550/arXiv.2506.12183)  
-**Giá trị sử dụng:** Cảnh báo rằng thiết kế temporal partition ảnh hưởng lớn tới precision-recall anomaly detection. Chỉ xem là nguồn gần, vì chưa có DOI peer-review chính thức trong record hiện tại.
+**Giá trị sử dụng:** Cảnh báo rằng thiết kế temporal partition ảnh hưởng lớn tới precision-recall anomaly detection.
 
 ### Mất cân bằng lớp và cost-sensitive learning
 
 **[28] Chawla, N. V., Bowyer, K. W., Hall, L. O. & Kegelmeyer, W. P. (2002).** “SMOTE: Synthetic Minority Over-sampling Technique.” *Journal of Artificial Intelligence Research*, 16, 321–357.  
 DOI: [10.1613/jair.953](https://doi.org/10.1613/jair.953)  
-**Giá trị sử dụng:** Nền tảng oversampling thiểu số; mọi SMOTE/biến thể phải fit trên train/OOF, không fit trước trước split.
+**Giá trị sử dụng:** Nền tảng oversampling thiểu số; mọi SMOTE/biến thể phải fit trên train/OOF, không fit trước split.
 
 **[29] Fernández, A., García, S., Galar, M., Prati, R. C., Krawczyk, B. & Herrera, F. (2018).** *Learning from Imbalanced Data Sets.* Springer.  
 DOI: [10.1007/978-3-319-98074-4](https://doi.org/10.1007/978-3-319-98074-4)  
@@ -298,7 +247,7 @@ DOI: [10.1007/978-3-319-98074-4](https://doi.org/10.1007/978-3-319-98074-4)
 
 **[30] Buda, M., Maki, A. & Mazurowski, M. A. (2018).** “A systematic study of the class imbalance problem in convolutional neural networks.” *Pattern Recognition Letters*, 106, 38–45.  
 DOI: [10.1016/j.patrec.2018.07.011](https://doi.org/10.1016/j.patrec.2018.07.011)  
-**Giá trị sử dụng:** Cổ vũ đánh giá các chiến lược mất cân bằng theo bài toán thực tế và kiểm tra xem cải thiện recall có đổi false-positive hay không.
+**Giá trị sử dụng:** Cổ vũ đánh giá các chiến lược mất cân bằng theo bài toán thực tế và kiểm tra xem cải thiện recall có đổi bằng false-positive hay không.
 
 **[31] Elkan, C. (2001).** “The Foundations of Cost-Sensitive Learning.” *IJCAI-01*, 973–978.  
 Persistent record: [https://dl.acm.org/doi/10.5555/645530.658061](https://dl.acm.org/doi/10.5555/645530.658061)  
@@ -332,7 +281,7 @@ DOI: [10.1007/s00500-022-07194-6](https://doi.org/10.1007/s00500-022-07194-6)
 
 **[38] Luche, J. R. D., Goussain, B. G. C. dos Santos & Freitas, C. R. de (2026).** “Robust Baselines and Probability Calibration for TPM-Oriented Predictive Maintenance.” *International Journal of Prognostics and Health Management*, 17(1).  
 DOI: [10.36001/ijphm.2026.v17i1.4659](https://doi.org/10.36001/ijphm.2026.v17i1.4659)  
-**Giá trị sử dụng:** Minh họa baseline RF/MLP, nested CV, SMOTE và calibration; cần xem đây là công trình mới và chưa có lịch sử trích dẫn lâu dài.
+**Giá trị sử dụng:** Minh họa baseline RF/MLP, nested CV, SMOTE và calibration.
 
 ### Batch-process monitoring và predictive maintenance
 
@@ -352,7 +301,7 @@ DOI: [10.3390/logistics4040035](https://doi.org/10.3390/logistics4040035)
 
 **[45] Saha, S. S., Sandha, S. S. & Srivastava, M. B. (2022).** “Machine Learning for Microcontroller-Class Hardware: A Review.” *IEEE Sensors Journal*, 22(22), 21362–21390.  
 DOI: [10.1109/JSEN.2022.3210773](https://doi.org/10.1109/JSEN.2022.3210773)  
-**Giá trị sử dụng:** Hỗ trợ đánh giá độ trễ, bộ nhớ, energy và deployment constraints nếu demonstrator chạy trên edge device; không liên quan đến tính an toàn SP.
+**Giá trị sử dụng:** Hỗ trợ đánh giá độ trễ, bộ nhớ, energy và deployment constraints nếu demonstrator chạy trên edge device.
 
 ### Cận quan sát nhân quả và setpoint recommendation
 
@@ -364,7 +313,7 @@ DOI: [10.1073/pnas.1804597117](https://doi.org/10.1073/pnas.1804597117)
 DOI: [10.1214/18-AOS1709](https://doi.org/10.1214/18-AOS1709)  
 **Giá trị sử dụng:** Nêu cách đánh giá treatment effect từ dữ liệu quan sát/causal forest; yêu cầu giả định overlap, no unmeasured confounding và validation theo can thiệp.
 
-## 10. Nguồn bổ sung về lựa chọn mô hình tabular [48]–[57]
+## 9. Nguồn bổ sung về lựa chọn mô hình tabular [48]–[57]
 
 **[48] Chen, T. & Guestrin, C. (2016).** “XGBoost: A Scalable Tree Boosting System.” *Proceedings of KDD*, 785–794.  
 DOI: [10.1145/2939672.2939785](https://doi.org/10.1145/2939672.2939785)  
@@ -378,7 +327,7 @@ Persistent record: [https://proceedings.neurips.cc/paper/6907](https://proceedin
 Persistent record: [arXiv:1706.09516](https://arxiv.org/abs/1706.09516)  
 **Giá trị sử dụng:** Ứng viên cho ordered boosting và ordered target encoding; sensor/metadata ở đây chủ yếu số, nên lợi thế biến phân loại cần được kiểm tra local thay vì suy diễn.
 
-**[51] Erickson, N. et. al. (2025).** “TabArena: A Living Benchmark for Machine Learning on Tabular Data.” *NeurIPS Datasets and Benchmarks*.  
+**[51] Erickson, N. et al. (2025).** “TabArena: A Living Benchmark for Machine Learning on Tabular Data.” *NeurIPS Datasets and Benchmarks*.  
 DOI/Persistent record: [https://openreview.net/forum?id=2gaiIurY1G](https://openreview.net/forum?id=2gaiIurY1G)  
 **Giá trị sử dụng:** Hỗ trợ xem gradient-boosted trees và GBDT vẫn mạnh trong benchmark tabular, còn deep/foundation models có thể catch up dưới tuning dài; kết quả benchmark ngoài không thay model selection trên Vegemite.
 
@@ -406,7 +355,7 @@ DOI/Persistent record: [10.48550/arXiv.2207.08815](https://doi.org/10.48550/arXi
 DOI/Persistent record: [10.1145/1143844.1143874](https://doi.org/10.1145/1143844.1143874)  
 **Giá trị sử dụng:** Căn cứ dùng Precision-Recall AUC cho lớp thiểu số thay vì chỉ AUROC/accuracy; hỗ trợ đánh giá `low_bad` và false alarms.
 
-## 11. Cách dùng bộ nguồn mở rộng
+## 10. Cách dùng bộ nguồn mở rộng
 
 1. Dùng [23]–[27] để thiết kế split theo batch và thời gian; không dùng random row split làm bằng chứng dự đoán tương lai.
 2. Dùng [28]–[33] để xử lý `low_bad` dưới loss/miss cost, nhưng calibration, class weight và sampling phải nằm trong validation folds.

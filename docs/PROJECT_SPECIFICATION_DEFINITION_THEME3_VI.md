@@ -6,7 +6,6 @@
 
 - Học phần: COS40007 Artificial Intelligence Engineering
 - Theme: Theme 3 – Product Manufacturing / Mechanical Engineering
-- Phần mở rộng tùy chọn: kiểm tra trực quan bằng UAV/camera, tùy thuộc vào dữ liệu hình ảnh, quyền sử dụng và phê duyệt an toàn.
 
 ## 2. Mục tiêu
 
@@ -23,7 +22,7 @@ Dự án sẽ:
 - Đánh giá liệu nhật ký downtime có đủ điều kiện cho bài toán dự đoán downtime có giám sát hay không. Nếu không, nêu rõ giới hạn và phân tích phát hiện bất thường như một nhánh riêng.
 - Trình bày kết quả và giới hạn của hệ thống trong một giao diện demonstrator.
 
-Các khuyến nghị chỉ mang tính tư vấn. Hệ thống không điều khiển máy móc hoặc UAV. Mối liên hệ dự đoán trong dữ liệu lịch sử không tự chứng minh rằng thay đổi SP sẽ gây ra cải thiện chất lượng. Phân tích hình ảnh UAV là phần mở rộng tùy chọn, không phải yêu cầu cốt lõi của Theme 3.
+Các khuyến nghị chỉ mang tính tư vấn. Hệ thống không tự động gửi lệnh điều khiển máy móc (PLC/DCS). Mối liên hệ dự đoán trong dữ liệu lịch sử không tự chứng minh rằng thay đổi SP sẽ gây ra cải thiện chất lượng.
 
 ## 3. Yêu cầu hệ thống
 
@@ -32,10 +31,9 @@ Các khuyến nghị chỉ mang tính tư vấn. Hệ thống không điều khi
 - **Chuẩn bị dữ liệu:** Nạp các file Theme 3 được phép sử dụng; kiểm tra schema, dữ liệu thiếu, bản ghi trùng, timestamp và phân bố lớp. Giữ nguyên dữ liệu nguồn; ghi lại quyết định làm sạch và gán nhãn.
 - **Nhãn chất lượng:** Tạo nhãn có thể truy xuất từ ba file chất lượng và kiểm tra mâu thuẫn giữa các batch. Xác minh vai trò của `output_log.csv` trước khi dùng file này để xử lý mâu thuẫn nhãn.
 - **Dự đoán chất lượng:** Huấn luyện baseline và các mô hình phân loại dữ liệu bảng phù hợp để ước lượng lớp `good`, `low_bad` và `high_bad` từ thông tin có sẵn tại thời điểm dự đoán.
-- **Khuyến nghị setpoint:** Xếp hạng các SP ứng viên theo mục tiêu đã nêu, chẳng hạn tăng xác suất dự đoán `good`. Chỉ thay đổi thông số có thể điều khiển và sử dụng giới hạn vận hành được nguồn có thẩm quyền xác nhận. Nếu thiếu giới hạn hoặc đầu vào hợp lệ, không đưa ra khuyến nghị vận hành.
+- **Khuyến nghị setpoint:** Xếp hạng các SP ứng viên theo mục tiêu đã nêu, chẳng hạn tăng xác suất dự đoán `good`. Chỉ thay đổi thông số có thể điều khiển và sử dụng giới hạn vận hành được nguồn có thẩm quyền xác nhận. Nếu thiếu giới hạn hoặc đầu vào hợp lệ, không đưa ra khuyến nghị vận hành thực tế.
 - **Downtime/phát hiện bất thường:** Chỉ ghép sự kiện downtime với phép đo quy trình khi định nghĩa sự kiện, timestamp và ánh xạ thiết bị đủ tin cậy. Nếu nhãn giám sát không đủ, chỉ cung cấp anomaly score như một đầu ra khảo sát riêng, không xem là xác suất downtime.
-- **Demonstrator:** Hiển thị dự đoán, SP ứng viên, bằng chứng liên quan và giới hạn dữ liệu. Ghi rõ đầu ra chỉ mang tính tư vấn và cần con người xem xét.
-- **Thị giác UAV tùy chọn:** Nếu được phép, chỉ phân tích các tình trạng nhìn thấy được, có nhãn và xuất hiện trong ảnh phù hợp. Không suy luận chất lượng bên trong sản phẩm hoặc lỗi thiết bị không nhìn thấy được từ hình ảnh.
+- **Demonstrator:** Hiển thị dự đoán, SP ứng viên, chẩn đoán bất thường theo cụm thiết bị (`FFTE`, `TFE`, `Extract Tank`), bằng chứng liên quan và giới hạn dữ liệu. Ghi rõ đầu ra chỉ mang tính tư vấn và cần con người xem xét.
 
 ### 3.2 Yêu cầu dữ liệu, mô hình và đánh giá
 
@@ -47,15 +45,13 @@ Các khuyến nghị chỉ mang tính tư vấn. Hệ thống không điều khi
 - Chỉ fit các bước điền dữ liệu thiếu, chuẩn hóa, chọn đặc trưng và cân bằng lớp trên dữ liệu huấn luyện. Không dùng số đo tương lai, nhãn cuối cùng của batch hoặc dữ liệu ghi nhận sau sự kiện downtime để dự đoán trạng thái trước đó.
 - Với downtime, xác định prediction horizon và quy tắc ghép sự kiện trước khi đánh giá. Khi dữ liệu cho phép, báo cáo sự kiện phát hiện/bỏ sót, cảnh báo sai và thời gian báo trước (lead time) [20, 21].
 - Xem feature importance là bằng chứng dự đoán, không phải bằng chứng nhân quả. Mối liên hệ trong dữ liệu lịch sử không chứng minh đổi SP sẽ cải thiện chất lượng; kết luận nhân quả cần giả định bổ sung và xác nhận phù hợp [18, 19].
-- Nếu dùng ảnh UAV, chia dữ liệu theo phiên ghi hình hoặc thời gian để giảm rò rỉ các khung hình gần giống nhau; ghi nhận chất lượng ảnh và điều kiện thu nhận [22].
 
 ### 3.3 An toàn, độ tin cậy và quản lý dữ liệu
 
-- Không gửi lệnh điều khiển máy móc hoặc UAV. Yêu cầu người vận hành hoặc chuyên gia có thẩm quyền xem xét mọi khuyến nghị.
+- Không gửi lệnh điều khiển máy móc tự động. Yêu cầu người vận hành hoặc chuyên gia có thẩm quyền xem xét mọi khuyến nghị.
 - Không suy ra giới hạn SP an toàn từ giá trị nhỏ nhất/lớn nhất quan sát được trong dataset.
 - Báo rõ đầu vào thiếu, không hợp lệ hoặc nằm ngoài phạm vi; không trả kết quả có vẻ thành công khi hệ thống không thể dự đoán đáng tin cậy.
 - Ghi lại phiên bản dataset, quy tắc gán nhãn, chiến lược chia tập, phiên bản mô hình/phần mềm và random seed để bảo đảm khả năng tái lập.
-- Xin phê duyệt phù hợp trước khi thu thập ảnh tại cơ sở thực tế, bao gồm an toàn, quyền riêng tư, quyền truy cập và thời hạn lưu trữ.
 
 ### 3.4 Đối chiếu rubric
 
@@ -72,18 +68,17 @@ Dự án đáp ứng các tiêu chí chấm điểm Theme 3:
 1. Nhãn chất lượng và quyết định tiền xử lý được ghi lại, có thể truy xuất về file nguồn.
 2. Mô hình chất lượng được so sánh với baseline và đánh giá trên các batch và/hoặc giai đoạn thời gian giữ lại, kèm metric theo lớp.
 3. Cách chia tập và pipeline tiền xử lý ngăn rò rỉ theo batch/bản ghi trùng; các phép biến đổi chỉ được fit trên dữ liệu huấn luyện.
-4. Đầu ra SP nằm trong giới hạn vận hành đã xác minh và được ghi rõ là tư vấn; nếu thiếu giới hạn được xác nhận, hệ thống từ chối đưa ra khuyến nghị vận hành.
+4. Đầu ra SP nằm trong giới hạn vận hành đã xác minh và được ghi rõ là tư vấn; nếu thiếu giới hạn được xác nhận, hệ thống từ chối đưa ra khuyến nghị vận hành thực tế.
 5. Chỉ gọi downtime là dự đoán khi nhãn sự kiện, thời gian, horizon và đánh giá đã được xác minh. Nếu không, phải báo cáo rõ là kết quả đánh giá mức sẵn sàng dữ liệu hoặc phân tích bất thường.
-6. Chỉ báo cáo metric UAV khi có ảnh phù hợp, được phép sử dụng, đã gán nhãn và có tập kiểm thử độc lập.
-7. Demonstrator phân biệt các loại đầu ra, nêu giới hạn và không điều khiển thiết bị.
+6. Demonstrator phân biệt các loại đầu ra, nêu giới hạn và không điều khiển thiết bị.
 
 ## 4. Đầu vào
 
 ### 4.1 Dữ liệu chất lượng và quy trình được cung cấp
 
-Nguồn chính là `Project/Theme3/data_02_07_2019-26-06-2020/`. Tài liệu Theme 3 mô tả dữ liệu bao phủ khoảng một năm sản xuất với các batch dùng những loại yeast khác nhau (`Part`).
+Nguồn chính là `Theme3/data_02_07_2019-26-06-2020/`. Tài liệu Theme 3 mô tả dữ liệu bao phủ khoảng một năm sản xuất với các batch dùng những loại yeast khác nhau (`Part`).
 
-Kiểm kê ban đầu trong workspace:
+Kiểm kê trong workspace:
 
 - `good.csv`: 13.302 dòng.
 - `low bad.csv`: 2.578 dòng.
@@ -92,13 +87,12 @@ Kiểm kê ban đầu trong workspace:
 - Ba file có 33 cột chung, gồm `VYP batch`, `Part`, `Set Time`, bảy cột SP và các giá trị quy trình/cảm biến. Ví dụ: `FFTE Feed solids SP`, `TFE Vacuum pressure SP`, `FFTE Feed solids PV`, `TFE Temperature` và `TFE Production solids PV`.
 - `FFTE`, `TFE` và `Extract Tank` là các hệ thống sản xuất được nêu trong tài liệu Theme 3.
 
-Các số liệu này là kết quả kiểm kê sơ bộ và phải được tái tạo bằng pipeline của dự án. Kiểm tra ban đầu cũng phát hiện 4.230 dòng trùng hoàn toàn và batch `97_2020_06_25` xuất hiện trong cả `good` và `low_bad`, với 36 tổ hợp SP/PV giống nhau nhưng mang nhãn khác nhau. Cần điều tra các trường hợp này và `output_log.csv`; ghi lại và cách ly mâu thuẫn chưa giải quyết thay vì tự chọn nhãn.
+Các số liệu này được tái tạo bằng pipeline của dự án. Kiểm tra phát hiện 4.230 dòng trùng hoàn toàn và batch `97_2020_06_25` xuất hiện trong cả `good` và `low_bad`, với 36 tổ hợp SP/PV giống nhau nhưng mang nhãn khác nhau. Hệ thống ghi lại và cách ly mâu thuẫn chưa giải quyết thay vì tự chọn nhãn.
 
 ### 4.2 Downtime và dữ liệu quy trình bổ sung
 
-- File downtime `Project/Theme3/Downtime/Yeast Prep DT 04_05_20 - 01_07_20.csv` có 218 dòng theo kiểm kê ban đầu, trong khoảng 04/05–02/07/2020. File có các trường như ngày/giờ sản xuất, line/sub-line, nguyên nhân, thời lượng và ghi chú. Không mặc định mọi bản ghi đều là sự cố ngoài kế hoạch.
+- File downtime `Theme3/Downtime/Yeast Prep DT 04_05_20 - 01_07_20.csv` có 218 dòng, trong khoảng 04/05–02/07/2020. File có các trường như ngày/giờ sản xuất, line/sub-line, nguyên nhân, thời lượng và ghi chú. Không mặc định mọi bản ghi đều là sự cố ngoài kế hoạch.
 - Workspace còn có các file Infinity về sản xuất và dữ liệu trend tần suất cao của Evaporator/FFTE. Trước khi ghép với dữ liệu chất lượng, cần xác minh schema, đơn vị, timestamp, tag thiết bị và liên kết batch.
-- Chưa tìm thấy ảnh/video UAV trong thư mục Theme3 được cung cấp. Nếu bổ sung, dữ liệu hình ảnh phải có nguồn được phép sử dụng và nhãn phù hợp.
 
 ### 4.3 Đặc trưng và metadata đầu vào
 
@@ -107,7 +101,6 @@ Các số liệu này là kết quả kiểm kê sơ bộ và phải được t�
 - **`Part`:** loại yeast/nguyên liệu; giữ lại để phân tích và chia nhóm phù hợp.
 - **`VYP batch` và `Set Time`:** mã batch và timestamp dùng để truy vết, liên kết dữ liệu và chia tập; không tự động dùng làm đặc trưng mô hình.
 - **Downtime:** thời gian, loại sự kiện và ánh xạ thiết bị/hệ thống, cùng dữ liệu quy trình được ghi trước prediction horizon.
-- **UAV tùy chọn:** ảnh/video được phép sử dụng, nhãn và metadata phiên ghi hình; chỉ dùng để phân tích tình trạng quan sát được.
 
 ## 5. Đầu ra mong đợi
 
@@ -122,29 +115,27 @@ Các số liệu này là kết quả kiểm kê sơ bộ và phải được t�
 
 - Danh sách xếp hạng các cấu hình SP ứng viên theo mục tiêu chất lượng đã xác định, giữ cố định trạng thái quy trình không thể điều khiển.
 - Giá trị SP hiện tại và ứng viên, mức thay đổi, điểm mô hình và việc ứng viên có đáp ứng giới hạn vận hành đã xác minh hay không.
-- Phân tích độ nhạy hoặc đánh giá của chuyên gia nếu khả thi. Đầu ra chỉ mang tính tư vấn, không chứng minh cải thiện nhân quả. Nếu chưa có giới hạn vận hành an toàn, phải nêu rõ không thể đưa ra khuyến nghị vận hành.
+- Phân tích độ nhạy hoặc đánh giá của chuyên gia nếu khả thi. Đầu ra chỉ mang tính tư vấn, không chứng minh cải thiện nhân quả. Nếu chưa có giới hạn vận hành an toàn, phải nêu rõ không thể đưa ra khuyến nghị vận hành thực tế.
 
 ### 5.3 Downtime và bất thường
 
 - Nếu dữ liệu sự kiện đầy đủ: đầu ra nguy cơ downtime cho prediction horizon và thiết bị/hệ thống xác định, được đánh giá bằng metric phù hợp theo sự kiện và thời điểm cảnh báo.
 - Nếu dữ liệu sự kiện không đầy đủ: cung cấp anomaly score riêng hoặc báo cáo mức sẵn sàng dữ liệu; không trình bày đây là dự đoán downtime đã được xác nhận.
 
-### 5.4 Demonstrator và đầu ra UAV tùy chọn
+### 5.4 Demonstrator
 
-- Giao diện nhận batch/trạng thái quy trình hợp lệ và hiển thị kết quả chất lượng, xếp hạng SP hoặc lý do không đưa ra khuyến nghị, cùng downtime/anomaly nếu dữ liệu hỗ trợ.
+- Giao diện nhận batch/trạng thái quy trình hợp lệ và hiển thị kết quả chất lượng, xếp hạng SP hoặc lý do không đưa ra khuyến nghị vận hành, cùng chẩn đoán downtime/anomaly theo từng cụm máy (`FFTE`, `TFE`, `Extract Tank`).
 - Hiển thị rõ trạng thái thiếu hoặc ngoài phạm vi, độ không chắc chắn và nguồn gốc kết quả; không thực hiện điều khiển máy.
-- Nếu có ảnh UAV phù hợp, chỉ hiển thị kết quả tình trạng quan sát được đã đánh giá, kèm tham chiếu ảnh/khung hình. Nếu chưa có, giao diện UAV phải được ghi rõ là minh họa chưa kiểm định và không tuyên bố hiệu năng.
 
 ## 6. Sản phẩm bàn giao
 
 1. Đặc tả dự án này và data dictionary cho các trường được phép sử dụng.
 2. Báo cáo kiểm toán dữ liệu, pipeline gán nhãn và tiền xử lý có thể tái lập, bao gồm nhật ký bản ghi trùng và mâu thuẫn nhãn.
-3. Notebook/script phân tích dữ liệu, mô hình hóa chất lượng, kiểm định và tính metric, kèm cấu hình và hướng dẫn chạy.
+3. Script phân tích dữ liệu, mô hình hóa chất lượng, kiểm định và tính metric, kèm cấu hình và hướng dẫn chạy.
 4. Baseline và mô hình chất lượng đã đánh giá, nêu rõ cách chia batch/thời gian và giới hạn.
-5. Phương pháp xếp hạng SP ứng viên theo giới hạn vận hành đã xác minh, hoặc tài liệu giải thích vì sao chưa thể đưa ra khuyến nghị vận hành.
-6. Phân tích downtime đã kiểm định nếu dữ liệu hỗ trợ; nếu không, báo cáo mức sẵn sàng dữ liệu và/hoặc phân tích anomaly được phân biệt rõ.
-7. Thành phần thị giác UAV tùy chọn nếu có dữ liệu và phê duyệt phù hợp; nếu không, tài liệu hóa thiết kế tích hợp chưa kiểm định.
-8. Demonstrator, hướng dẫn sử dụng, báo cáo kỹ thuật và thuyết trình mô tả phương pháp, bằng chứng đáp ứng rubric, kết quả, rủi ro và giới hạn.
-9. Mã nguồn/cấu hình có thể chia sẻ và đầu ra mẫu. Không phân phối dữ liệu sản xuất nếu chưa được cấp phép.
+5. Phương pháp xếp hạng SP ứng viên theo giới hạn vận hành đã xác minh, cùng tài liệu giải thích cổng kiểm soát an toàn.
+6. Phân tích mức sẵn sàng dữ liệu downtime và sàng lọc anomaly được phân biệt rõ.
+7. Demonstrator, hướng dẫn sử dụng, báo cáo kỹ thuật và thuyết trình mô tả phương pháp, bằng chứng đáp ứng rubric, kết quả, rủi ro và giới hạn.
+8. Mã nguồn/cấu hình có thể chia sẻ và đầu ra mẫu. Không phân phối dữ liệu sản xuất nếu chưa được cấp phép.
 
-**Cơ sở dự án:** COS40007 Design Project, Theme 3; `Project/Theme 3 - Huong dan chi tiet.md`; các file được cung cấp trong `Project/Theme3/`. Tài liệu nghiên cứu phương pháp [11]–[22] được chú giải trong `Project/RESEARCH_BACKGROUND_THEME3_UAV_VI.md`; các nguồn này hỗ trợ lựa chọn phương pháp nhưng không xác nhận hiệu năng hoặc giới hạn vận hành an toàn của dây chuyền.
+**Cơ sở dự án:** COS40007 Design Project, Theme 3; các file được cung cấp trong `Theme3/`. Tài liệu nghiên cứu phương pháp được chú giải trong [`docs/RESEARCH_BACKGROUND_THEME3_VI.md`](RESEARCH_BACKGROUND_THEME3_VI.md); các nguồn này hỗ trợ lựa chọn phương pháp nhưng không xác nhận hiệu năng hoặc giới hạn vận hành an toàn của dây chuyền.

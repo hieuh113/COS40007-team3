@@ -48,7 +48,7 @@ The system addresses two core operational questions:
 ├── requirements-theme3.txt               # Python dependencies for the Theme 3 pipeline & Streamlit UI
 ├── docs/                                 # Project specification, data dictionary, audit & methodology reports
 │   ├── PROJECT_SPECIFICATION_DEFINITION_THEME3_VI.md
-│   ├── RESEARCH_BACKGROUND_THEME3_UAV_VI.md
+│   ├── RESEARCH_BACKGROUND_THEME3_VI.md
 │   ├── data_dictionary_theme3.md
 │   ├── data_audit_theme3.md
 │   ├── field_confirmation_register.csv
