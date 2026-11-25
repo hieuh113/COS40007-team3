@@ -1,0 +1,22 @@
+# Python & virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.streamlit/
+
+# Raw manufacturing datasets & row-level derived files (do not distribute without authorization)
+Theme3/data_02_07_2019-26-06-2020/
+Theme3/Downtime/
+Theme3/Infinity Data 01_05_20 - 30_06-20/
+Theme3/Infinity Data 01_05_20 - 30_06_20/
+Theme3/Weekly Data 18_05_20 - 22_05_20/
+Theme3/Processed_Data/*
+!Theme3/Processed_Data/.gitignore
+
+# Large archives / nested git workspaces
+course_submissions/Week8/github-pipeline-setup-main/
+course_submissions/Week8/github-pipeline-setup-main.zip
+archive.zip

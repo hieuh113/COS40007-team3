@@ -1,0 +1,142 @@
+{
+  "evaluation_timestamp": "2026-11-25T10:47:54",
+  "protocol_compliance": "SINGLE_FINAL_TEST_RUN_ON_FROZEN_MODEL",
+  "frozen_model_name": "random_forest_balanced",
+  "frozen_model_sha256": "73f696639b66c7a215f90a4390330df65ee5e12370b4d2bc8a1cb16a4235969e",
+  "test_csv_sha256": "13e33daa98072e85641648f51099adc2aafa467481bb2c7b2019fb712926f635",
+  "test_period": "2020-05-04 19:09:00 to 2020-06-26 03:27:00",
+  "test_rows": 2814,
+  "test_batches": 105,
+  "row_level_metrics": {
+    "accuracy": 0.35856432125088844,
+    "macro_f1": 0.268433984017123,
+    "balanced_accuracy": 0.33553652103398196,
+    "macro_pr_auc": 0.37172030102898157,
+    "log_loss": 1.2799733240095268,
+    "multiclass_brier": 0.7528169035111588,
+    "mean_ece": 0.19455657682535374,
+    "per_class": [
+      {
+        "quality_class": "good",
+        "precision": 0.5087260034904014,
+        "recall": 0.38996655518394646,
+        "f1_score": 0.4414994320333207,
+        "pr_auc_ovr": 0.5141121156693138,
+        "ece_10_bins": 0.16589204507795693,
+        "support_rows": 1495,
+        "support_batches": 44
+      },
+      {
+        "quality_class": "low_bad",
+        "precision": 0.5,
+        "recall": 0.0015923566878980893,
+        "f1_score": 0.0031746031746031746,
+        "pr_auc_ovr": 0.3183014726932904,
+        "ece_10_bins": 0.15153690772786263,
+        "support_rows": 628,
+        "support_batches": 21
+      },
+      {
+        "quality_class": "high_bad",
+        "precision": 0.25510204081632654,
+        "recall": 0.6150506512301013,
+        "f1_score": 0.3606279168434451,
+        "pr_auc_ovr": 0.28274731472434056,
+        "ece_10_bins": 0.2662407776702417,
+        "support_rows": 691,
+        "support_batches": 40
+      }
+    ],
+    "confusion_matrix_labels": [
+      "good",
+      "low_bad",
+      "high_bad"
+    ],
+    "confusion_matrix": [
+      [
+        583,
+        1,
+        911
+      ],
+      [
+        297,
+        1,
+        330
+      ],
+      [
+        266,
+        0,
+        425
+      ]
+    ]
+  },
+  "majority_baseline_comparison": {
+    "majority_class_from_train": "high_bad",
+    "accuracy": 0.24555792466240228,
+    "macro_f1": 0.13143128863528294,
+    "balanced_accuracy": 0.3333333333333333
+  },
+  "batch_level_metrics": {
+    "mean_batch_row_accuracy": 0.45727779043117506,
+    "median_batch_row_accuracy": 0.3,
+    "min_batch_row_accuracy": 0.0,
+    "batch_majority_vote_accuracy": 0.44761904761904764,
+    "batch_majority_vote_macro_f1": 0.32850678733031674
+  },
+  "advisory_low_bad_tiers": [
+    {
+      "tier": "primary_argmax",
+      "threshold": "argmax",
+      "flagged_rows": 2,
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 627,
+      "low_bad_precision": 0.5,
+      "low_bad_recall": 0.0015923566878980893,
+      "low_bad_batches_with_at_least_one_hit": "1/21"
+    },
+    {
+      "tier": "advisory_elevated_alert_ge_0.25",
+      "threshold": 0.25,
+      "flagged_rows": 53,
+      "true_positives": 35,
+      "false_positives": 18,
+      "false_negatives": 593,
+      "low_bad_precision": 0.660377358490566,
+      "low_bad_recall": 0.05573248407643312,
+      "low_bad_batches_with_at_least_one_hit": "4/21"
+    },
+    {
+      "tier": "advisory_watch_ge_0.15",
+      "threshold": 0.15,
+      "flagged_rows": 263,
+      "true_positives": 104,
+      "false_positives": 159,
+      "false_negatives": 524,
+      "low_bad_precision": 0.39543726235741444,
+      "low_bad_recall": 0.16560509554140126,
+      "low_bad_batches_with_at_least_one_hit": "6/21"
+    }
+  ],
+  "uncertainty_summary": {
+    "normalized_entropy_mean_all": 0.7409194348761065,
+    "normalized_entropy_mean_correct": 0.7402026611830627,
+    "normalized_entropy_mean_incorrect": 0.7413201133560406,
+    "confidence_margin_mean_all": 0.28412483630186364,
+    "confidence_margin_mean_correct": 0.27847801197000993,
+    "confidence_margin_mean_incorrect": 0.28728142674554247,
+    "max_prob_mean_all": 0.607362879028377,
+    "high_uncertainty_rows_entropy_ge_0.75": 1480
+  },
+  "domain_shift_audit": {
+    "test_rows_with_any_feature_outside_train_minmax": 602,
+    "test_ood_row_rate": 0.21393034825870647,
+    "features_outside_train_minmax": {
+      "FFTE Steam pressure SP": 1,
+      "TFE Production solids SP": 24,
+      "FFTE Discharge solids": 2,
+      "FFTE Production solids PV": 2,
+      "TFE Production solids density": 599
+    }
+  }
+}

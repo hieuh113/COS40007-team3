@@ -1,0 +1,138 @@
+{
+  "supervised_downtime_prediction_ready": false,
+  "prediction_horizon_defined": false,
+  "event_label_rule_defined": false,
+  "equipment_mapping_verified": false,
+  "complete_non_event_periods_verified": false,
+  "event_start_semantics_verified": false,
+  "supervised_model_trained": false,
+  "anomaly_output_is_downtime_probability": false,
+  "event_log": {
+    "file": "Theme3/Downtime/Yeast Prep DT 04_05_20 - 01_07_20.csv",
+    "rows": 218,
+    "timestamp_start": "2020-05-04 13:30:00",
+    "timestamp_end": "2020-07-02 04:10:00",
+    "invalid_timestamps": 0,
+    "duplicate_rows": 0,
+    "equipment_fields_observed": {
+      "Dept": [
+        "2"
+      ],
+      "Line": [
+        "6"
+      ],
+      "Sub Line": [
+        "0"
+      ]
+    },
+    "cause_category_counts": {
+      "Startup": 60,
+      "Shutdown": 56,
+      "TFE": 51,
+      "Sanitation": 33,
+      "Extract Vat": 8,
+      "Changeover": 3,
+      "Personnel": 2,
+      "FFTE": 2,
+      "Emergency": 1,
+      "Break": 1,
+      "MBUX Separators": 1
+    },
+    "cause_counts": {
+      "Daily Startup": 55,
+      "Daily Shutdown": 50,
+      "Low Solids": 45,
+      "Machine Sanitation  C I P": 33,
+      "Waiting On Separators": 8,
+      "Weekly Shutdown": 6,
+      "Thin Film Evaporation": 4,
+      "Changeover Product": 3,
+      "Weekly Startup": 3,
+      "Waiting On Labour": 2,
+      "Ffte Condenser Vaccum Fault": 2,
+      "Fire Alarm Or Evacuation": 1,
+      "Chilled Water": 1,
+      "Startup - Other": 1,
+      "Motor High Amp/overload": 1,
+      "Team Meeting": 1,
+      "Steam Supply": 1,
+      "Equipment Faults - Valves": 1
+    },
+    "frequency_counts": {
+      "1": 213,
+      "2": 4,
+      "4": 1
+    },
+    "duration_minutes": {
+      "min": 10.0,
+      "median": 55.0,
+      "max": 375.0
+    },
+    "missing_counts": {
+      "To Product": 215,
+      "Comments": 104
+    },
+    "time_column_semantics_verified_as_event_start": false,
+    "event_end_timestamps_present": false,
+    "complete_non_event_coverage_verified": false
+  },
+  "trend_sources": [
+    {
+      "trend": "evaporator",
+      "file": "Theme3/Weekly Data 18_05_20 - 22_05_20/Evaporator Trends 18_05 - 22_05.csv",
+      "rows": 359485,
+      "measurement_columns": [
+        "VEG_C.VMLT2007 (%)",
+        "VEG_B.HMI_VEFC1562.PV (L/Hr)",
+        "VEG_B.HMI_VEFC1062.PV (L/Hr)",
+        "VEG_B.HMI_VELC1060.PV (%)",
+        "VEG_B.HMI_VEDC1266.PV (%)",
+        "VEG_B.HMI_VEFC1265.PV (kg/hr)",
+        "VEG_B.HMI_VELC1560.PV (%)",
+        "VEG_B.HMI_VELC1662.PV (%)"
+      ],
+      "start": "2020-05-18 00:00:33",
+      "end": "2020-05-22 23:59:31.399000",
+      "median_sample_interval_seconds": 1.016,
+      "rows_with_any_exploratory_outlier": 82916,
+      "rows_with_any_exploratory_outlier_rate": 0.23065218298399098,
+      "event_timestamps_inside_time_window": 27,
+      "event_time_overlap_is_not_device_matching": true
+    },
+    {
+      "trend": "ffte",
+      "file": "Theme3/Weekly Data 18_05_20 - 22_05_20/FFTE Trend 22_06 - 26_06.csv",
+      "rows": 132062,
+      "measurement_columns": [
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_Steam_Pressure",
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_Pre_Heat_Temperature1 (Deg C)",
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_Pre_Heat_Temperature2 (Deg C)",
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_Pre_Heat_Temperature3 (Deg C)",
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_Post_Heat_Temperature (Deg C)",
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_CIP_Supply_Flow",
+        "Port_Melbourne:RSLinx Enterprise:Veg_B.SQL_FFTE_Product_Supply_Flow"
+      ],
+      "start": "2020-06-22 00:00:50",
+      "end": "2020-06-26 23:59:45.137000",
+      "median_sample_interval_seconds": 2.051,
+      "rows_with_any_exploratory_outlier": 22061,
+      "rows_with_any_exploratory_outlier_rate": 0.16705032484742016,
+      "event_timestamps_inside_time_window": 25,
+      "event_time_overlap_is_not_device_matching": true
+    }
+  ],
+  "limitations": [
+    "The event log contains planned or routine categories such as Startup, Shutdown and Sanitation as well as process causes; not all rows are confirmed unplanned failures.",
+    "The log has event date/time and duration but no explicit event end timestamp; the meaning of Time as event start has not been independently confirmed.",
+    "Dept, Line and Sub Line are constant in this log. A validated mapping from these fields and trend tags to the relevant equipment is not supplied.",
+    "The log does not establish intervals with no events, so unlogged times cannot safely be labeled normal.",
+    "Trend files cover only short windows and timestamp overlap does not establish equipment/tag alignment.",
+    "The exploratory robust-MAD screen has no verified anomaly labels or operational threshold and must not be interpreted as downtime risk."
+  ],
+  "exploratory_screen": {
+    "method": "Per-measurement median/MAD robust-z screen; flag absolute robust-z > 4.5",
+    "is_validated_anomaly_detector": false,
+    "is_downtime_prediction": false,
+    "note": "Statistical outliers are exploratory only; startup, shutdown, product changes and sensor/data-quality effects may be normal process modes."
+  }
+}

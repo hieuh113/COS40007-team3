@@ -1,0 +1,7 @@
+split,quality_class,rows,proportion,batches
+train,good,8208,0.41435711040436163,209
+train,low_bad,1338,0.06754505527790398,29
+train,high_bad,10263,0.5180978343177344,252
+validation,good,1757,0.5092753623188406,47
+validation,low_bad,222,0.06434782608695652,8
+validation,high_bad,1471,0.4263768115942029,52

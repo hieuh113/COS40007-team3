@@ -1,0 +1,98 @@
+{
+  "random_forest_balanced": {
+    "labels_order": [
+      "good",
+      "low_bad",
+      "high_bad"
+    ],
+    "rows_actual_columns_predicted": [
+      [
+        1365,
+        3,
+        389
+      ],
+      [
+        157,
+        11,
+        54
+      ],
+      [
+        576,
+        1,
+        894
+      ]
+    ]
+  },
+  "hist_gradient_boosting": {
+    "labels_order": [
+      "good",
+      "low_bad",
+      "high_bad"
+    ],
+    "rows_actual_columns_predicted": [
+      [
+        1139,
+        20,
+        598
+      ],
+      [
+        154,
+        8,
+        60
+      ],
+      [
+        538,
+        3,
+        930
+      ]
+    ]
+  },
+  "logistic_regression_balanced": {
+    "labels_order": [
+      "good",
+      "low_bad",
+      "high_bad"
+    ],
+    "rows_actual_columns_predicted": [
+      [
+        784,
+        713,
+        260
+      ],
+      [
+        77,
+        122,
+        23
+      ],
+      [
+        563,
+        364,
+        544
+      ]
+    ]
+  },
+  "majority_baseline": {
+    "labels_order": [
+      "good",
+      "low_bad",
+      "high_bad"
+    ],
+    "rows_actual_columns_predicted": [
+      [
+        0,
+        0,
+        1757
+      ],
+      [
+        0,
+        0,
+        222
+      ],
+      [
+        0,
+        0,
+        1471
+      ]
+    ]
+  }
+}

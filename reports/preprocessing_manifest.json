@@ -1,0 +1,156 @@
+{
+  "source_files_sha256": {
+    "good.csv": "3c625b8534ebaaa2a9917e7a5795a4c6a93a9a60e6e91998aa23161be1d0d52b",
+    "low bad.csv": "1cd710c714c82512ae4e75c38c6aa1fa47c9b3dc0b3ee802e5f988c08524ac9f",
+    "high bad.csv": "b9f921daba1449301fcda4ae4f49ad5c3240eaae14712ba68ec1bc840f303c3d",
+    "output_log.csv": "f1b699584aa368f7eafe744aedd1faa0486b8ce0c6be4f5f3937eca3b7eb4295"
+  },
+  "source_files_modified": false,
+  "source_rows": 30375,
+  "deduplication": {
+    "good": {
+      "source_rows": 13302,
+      "unique_rows": 11496,
+      "duplicate_groups": 301,
+      "duplicate_excess": 1806
+    },
+    "low_bad": {
+      "source_rows": 2578,
+      "unique_rows": 2224,
+      "duplicate_groups": 59,
+      "duplicate_excess": 354
+    },
+    "high_bad": {
+      "source_rows": 14495,
+      "unique_rows": 12425,
+      "duplicate_groups": 346,
+      "duplicate_excess": 2070
+    }
+  },
+  "duplicate_excess_total": 4230,
+  "unique_rows_before_quarantine": 26145,
+  "quarantined_batches": {
+    "97_2020_06_25": [
+      "good",
+      "low_bad"
+    ]
+  },
+  "quarantined_rows": {
+    "rows": 72,
+    "batches": 1,
+    "class_rows": {
+      "good": 36,
+      "low_bad": 36
+    },
+    "set_time_min": "2020-06-25 13:26:00",
+    "set_time_max": "2020-06-25 20:02:00"
+  },
+  "eligible_rows": 26073,
+  "split_policy": {
+    "batch_order": "ascending earliest Set Time; each batch remains intact",
+    "target_proportions_by_batch": {
+      "train": 0.7,
+      "validation": 0.15,
+      "test": 0.15
+    },
+    "safe_boundaries_available": 358,
+    "train_validation_gap": {
+      "train_latest": "2020-03-27 08:17:00",
+      "validation_earliest": "2020-03-27 08:27:00"
+    },
+    "validation_test_gap": {
+      "validation_latest": "2020-05-04 17:33:00",
+      "test_earliest": "2020-05-04 19:09:00"
+    },
+    "batch_counts": {
+      "train": 490,
+      "validation": 107,
+      "test": 105
+    }
+  },
+  "splits": {
+    "train": {
+      "rows": 19809,
+      "batches": 490,
+      "class_rows": {
+        "good": 8208,
+        "high_bad": 10263,
+        "low_bad": 1338
+      },
+      "set_time_min": "2019-07-01 07:59:00",
+      "set_time_max": "2020-03-27 08:17:00"
+    },
+    "validation": {
+      "rows": 3450,
+      "batches": 107,
+      "class_rows": {
+        "good": 1757,
+        "high_bad": 1471,
+        "low_bad": 222
+      },
+      "set_time_min": "2020-03-27 08:27:00",
+      "set_time_max": "2020-05-04 17:33:00"
+    },
+    "test": {
+      "rows": 2814,
+      "batches": 105,
+      "class_rows": {
+        "good": 1495,
+        "high_bad": 691,
+        "low_bad": 628
+      },
+      "set_time_min": "2020-05-04 19:09:00",
+      "set_time_max": "2020-06-26 03:27:00"
+    }
+  },
+  "output_log_check": {
+    "rows": 704,
+    "unique_batches": 703,
+    "label_set_mismatches": {},
+    "resolves_conflicts": false
+  },
+  "model_input_policy": {
+    "feature_candidates": [
+      "FFTE Feed solids SP",
+      "FFTE Production solids SP",
+      "FFTE Steam pressure SP",
+      "TFE Out flow SP",
+      "TFE Production solids SP",
+      "TFE Vacuum pressure SP",
+      "TFE Steam pressure SP",
+      "Extract tank Level",
+      "FFTE Discharge density",
+      "FFTE Discharge solids",
+      "FFTE Feed flow rate PV",
+      "FFTE Feed solids PV",
+      "FFTE Heat temperature 1",
+      "FFTE Heat temperature 2",
+      "FFTE Heat temperature 3",
+      "FFTE Production solids PV",
+      "FFTE Steam pressure PV",
+      "TFE Input flow PV",
+      "TFE Level",
+      "TFE Motor current",
+      "TFE Motor speed",
+      "TFE Out flow PV",
+      "TFE Product out temperature",
+      "TFE Production solids PV",
+      "TFE Production solids density",
+      "TFE Steam pressure PV",
+      "TFE Steam temperature",
+      "TFE Tank level",
+      "TFE Temperature",
+      "TFE Vacuum pressure PV"
+    ],
+    "excluded_metadata": [
+      "Part",
+      "Set Time",
+      "VYP batch"
+    ],
+    "imputation": "Not fitted: source feature cells are complete; if needed later, fit on train only.",
+    "categorical_encoding": "Not applied: Part is retained as metadata and excluded pending availability confirmation.",
+    "scaling": "Not fitted in this split builder; any scaler must be fit on train only in the model pipeline.",
+    "class_imbalance": "No resampling or weighting in this builder; any balancing must use training rows only.",
+    "future_readings": "Rows use their recorded values only; no later same-batch observations are aggregated."
+  }
+}

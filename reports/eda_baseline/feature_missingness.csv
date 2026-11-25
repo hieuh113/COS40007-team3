@@ -1,0 +1,31 @@
+feature,train_missing,validation_missing
+FFTE Feed solids SP,0,0
+FFTE Production solids SP,0,0
+FFTE Steam pressure SP,0,0
+TFE Out flow SP,0,0
+TFE Production solids SP,0,0
+TFE Vacuum pressure SP,0,0
+TFE Steam pressure SP,0,0
+Extract tank Level,0,0
+FFTE Discharge density,0,0
+FFTE Discharge solids,0,0
+FFTE Feed flow rate PV,0,0
+FFTE Feed solids PV,0,0
+FFTE Heat temperature 1,0,0
+FFTE Heat temperature 2,0,0
+FFTE Heat temperature 3,0,0
+FFTE Production solids PV,0,0
+FFTE Steam pressure PV,0,0
+TFE Input flow PV,0,0
+TFE Level,0,0
+TFE Motor current,0,0
+TFE Motor speed,0,0
+TFE Out flow PV,0,0
+TFE Product out temperature,0,0
+TFE Production solids PV,0,0
+TFE Production solids density,0,0
+TFE Steam pressure PV,0,0
+TFE Steam temperature,0,0
+TFE Tank level,0,0
+TFE Temperature,0,0
+TFE Vacuum pressure PV,0,0

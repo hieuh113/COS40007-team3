@@ -1,0 +1,30 @@
+{
+  "decision": "operational ranking blocked",
+  "operational_ranking_generated": false,
+  "approved_bounds_file": "approved_operating_bounds.json",
+  "approved_bounds_file_present": false,
+  "bounds_validation_error": null,
+  "sp_columns": [
+    "FFTE Feed solids SP",
+    "FFTE Production solids SP",
+    "FFTE Steam pressure SP",
+    "TFE Out flow SP",
+    "TFE Production solids SP",
+    "TFE Vacuum pressure SP",
+    "TFE Steam pressure SP"
+  ],
+  "evaluation_data_used": [
+    "train.csv",
+    "validation.csv"
+  ],
+  "test_opened": false,
+  "reason": "No authorized bounds are available in the supplied project files. Empirical extrema and quantiles are descriptive only, not safe operating limits.",
+  "model_gate": {
+    "current_candidate": "Random Forest",
+    "validation_macro_f1": 0.4793,
+    "low_bad_recall": 0.0495,
+    "probability_calibration_approved_for_ranking": false,
+    "note": "Current quality-model results do not support operational recommendations; candidate ranking is not produced even if bounds are later supplied until model validity is reviewed."
+  },
+  "observed_sp_summary_file": "observed_sp_ranges.csv"
+}

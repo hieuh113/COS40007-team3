@@ -1,0 +1,8 @@
+setpoint,train_rows,train_unique_values,train_observed_min,train_observed_max,train_q01,train_q99,validation_observed_min,validation_observed_max,validation_outside_train_observed_range,train_validation_observed_min,train_validation_observed_max
+FFTE Feed solids SP,19809,6,25.0,50.0,25.0,50.0,25.0,50.0,0,25.0,50.0
+FFTE Production solids SP,19809,15,39.0,43.0,39.0,43.0,41.0,43.0,0,39.0,43.0
+FFTE Steam pressure SP,19809,2534,12.0,850.0,55.0,158.78919999999997,60.0,160.0,0,12.0,850.0
+TFE Out flow SP,19809,160,1240.0,3278.6,1725.3,3083.72,1925.3,2846.51,0,1240.0,3278.6
+TFE Production solids SP,19809,111,0.0,88.0,27.49,85.0,0.0,98.0,3,0.0,98.0
+TFE Vacuum pressure SP,19809,4046,-89.0,-35.0,-89.0,-36.37,-80.0,-36.37,0,-89.0,-35.0
+TFE Steam pressure SP,19809,90,2.0,135.0,55.0,127.54599999999773,2.0,130.0,0,2.0,135.0

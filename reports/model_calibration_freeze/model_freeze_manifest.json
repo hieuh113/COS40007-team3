@@ -1,0 +1,225 @@
+{
+  "protocol_status": "FROZEN_BEFORE_TEST",
+  "frozen_at": "2026-11-25T10:47:45",
+  "test_set_opened_before_freeze": false,
+  "selected_primary_model": "random_forest_balanced",
+  "selected_calibration_method": "uncalibrated",
+  "temperature_parameter": null,
+  "artifact_path": "Theme3/Processed_Data/frozen_model/quality_model_frozen.joblib",
+  "artifact_sha256": "73f696639b66c7a215f90a4390330df65ee5e12370b4d2bc8a1cb16a4235969e",
+  "data_provenance": {
+    "train_csv_sha256": "38cdecf466afcc40859a04ab881a0ef2b91c017c42f16d0aa033862dde1e473f",
+    "validation_csv_sha256": "e2fb1738d7890d16a439d0546f1f8c9c33b6ca0bd1dad0383f08f420c738eede",
+    "train_rows": 19809,
+    "train_batches": 490,
+    "validation_rows": 3450,
+    "validation_batches": 107,
+    "quarantined_batch": "97_2020_06_25"
+  },
+  "feature_count": 30,
+  "feature_columns": [
+    "FFTE Feed solids SP",
+    "FFTE Production solids SP",
+    "FFTE Steam pressure SP",
+    "TFE Out flow SP",
+    "TFE Production solids SP",
+    "TFE Vacuum pressure SP",
+    "TFE Steam pressure SP",
+    "Extract tank Level",
+    "FFTE Discharge density",
+    "FFTE Discharge solids",
+    "FFTE Feed flow rate PV",
+    "FFTE Feed solids PV",
+    "FFTE Heat temperature 1",
+    "FFTE Heat temperature 2",
+    "FFTE Heat temperature 3",
+    "FFTE Production solids PV",
+    "FFTE Steam pressure PV",
+    "TFE Input flow PV",
+    "TFE Level",
+    "TFE Motor current",
+    "TFE Motor speed",
+    "TFE Out flow PV",
+    "TFE Product out temperature",
+    "TFE Production solids PV",
+    "TFE Production solids density",
+    "TFE Steam pressure PV",
+    "TFE Steam temperature",
+    "TFE Tank level",
+    "TFE Temperature",
+    "TFE Vacuum pressure PV"
+  ],
+  "decision_rule": {
+    "primary_prediction": "argmax",
+    "low_bad_advisory_watch_threshold": 0.15,
+    "low_bad_high_alert_threshold": 0.25,
+    "rationale": "Keep argmax for primary 3-class prediction to preserve overall Macro-F1 (0.4793) and high low_bad precision (0.7333). Expose secondary advisory risk flags at P(low_bad) >= 0.15 (watch) and >= 0.25 (elevated alert) in the demonstrator UI so operators receive early minority-class warnings without flooding primary classification with false alarms."
+  },
+  "validation_metrics_at_freeze": {
+    "model": "random_forest_balanced",
+    "accuracy": 0.6579710144927536,
+    "macro_f1": 0.47925011573240894,
+    "balanced_accuracy": 0.47806393662534014,
+    "macro_pr_auc": 0.49070475031428407,
+    "low_bad_pr_auc": 0.124803631516926,
+    "good_pr_auc": 0.6729419809142544,
+    "high_bad_pr_auc": 0.6743686385116718,
+    "low_bad_precision": 0.7333333333333333,
+    "low_bad_recall": 0.04954954954954955,
+    "low_bad_f1": 0.09282700421940929,
+    "good_f1": 0.708171206225681,
+    "high_bad_f1": 0.6367521367521367,
+    "log_loss": 0.8098423055088215,
+    "multiclass_brier": 0.48648695898336275,
+    "mean_ece": 0.05735955231877896,
+    "ece_by_class": {
+      "good": 0.07882671447750984,
+      "low_bad": 0.03889742539314074,
+      "high_bad": 0.054354517085686296
+    },
+    "batch_accuracy_mean": 0.7046744963317065,
+    "batch_accuracy_min": 0.0,
+    "low_bad_batches_detected": "1/8",
+    "low_bad_mean_batch_recall": 0.06875,
+    "confusion_matrix": [
+      [
+        1365,
+        3,
+        389
+      ],
+      [
+        157,
+        11,
+        54
+      ],
+      [
+        576,
+        1,
+        894
+      ]
+    ],
+    "classification_report": {
+      "good": {
+        "precision": 0.6506196377502383,
+        "recall": 0.7768924302788844,
+        "f1-score": 0.708171206225681,
+        "support": 1757.0
+      },
+      "low_bad": {
+        "precision": 0.7333333333333333,
+        "recall": 0.04954954954954955,
+        "f1-score": 0.09282700421940929,
+        "support": 222.0
+      },
+      "high_bad": {
+        "precision": 0.668661181750187,
+        "recall": 0.6077498300475866,
+        "f1-score": 0.6367521367521367,
+        "support": 1471.0
+      },
+      "accuracy": 0.6579710144927536,
+      "macro avg": {
+        "precision": 0.6842047176112529,
+        "recall": 0.47806393662534025,
+        "f1-score": 0.47925011573240894,
+        "support": 3450.0
+      },
+      "weighted avg": {
+        "precision": 0.6636345802555633,
+        "recall": 0.6579710144927536,
+        "f1-score": 0.6381237094022096,
+        "support": 3450.0
+      }
+    }
+  },
+  "calibration_summary": [
+    {
+      "method": "uncalibrated",
+      "oof_log_loss": 1.2345550860045995,
+      "oof_brier": 0.5988964914864986,
+      "oof_mean_ece": 0.12863641367790932,
+      "oof_macro_f1": 0.3569250419282309,
+      "val_log_loss": 0.8098423055088215,
+      "val_brier": 0.48648695898336275,
+      "val_mean_ece": 0.05735955231877896,
+      "val_macro_f1": 0.47925011573240894,
+      "val_low_bad_pr_auc": 0.124803631516926
+    },
+    {
+      "method": "temperature",
+      "oof_log_loss": 0.9989778923667881,
+      "oof_brier": 0.5864212809844591,
+      "oof_mean_ece": 0.09931224758819751,
+      "oof_macro_f1": 0.3569250419282309,
+      "val_log_loss": 0.924407799750776,
+      "val_brier": 0.554513263818323,
+      "val_mean_ece": 0.145795861321847,
+      "val_macro_f1": 0.47925011573240894,
+      "val_low_bad_pr_auc": 0.1270718980620243
+    },
+    {
+      "method": "sigmoid",
+      "oof_log_loss": 0.9057957951342687,
+      "oof_brier": 0.5467532336953745,
+      "oof_mean_ece": 0.0571963809917854,
+      "oof_macro_f1": 0.40468243334003073,
+      "val_log_loss": 0.8445172057229483,
+      "val_brier": 0.5113962141613612,
+      "val_mean_ece": 0.09059803597855622,
+      "val_macro_f1": 0.47925011573240894,
+      "val_low_bad_pr_auc": 0.06872385109777865
+    },
+    {
+      "method": "isotonic",
+      "oof_log_loss": 0.8856481866701074,
+      "oof_brier": 0.5308491235469052,
+      "oof_mean_ece": 0.028915676692370745,
+      "oof_macro_f1": 0.408234710264383,
+      "val_log_loss": 0.8580574778969458,
+      "val_brier": 0.5184553447948096,
+      "val_mean_ece": 0.09107539422988369,
+      "val_macro_f1": 0.47925011573240894,
+      "val_low_bad_pr_auc": 0.06898429883483215
+    }
+  ],
+  "part_subgroup_validation": [
+    {
+      "Part": "Yeast - BRD",
+      "rows": 1583,
+      "batches": 39,
+      "accuracy": 0.6234996841440303,
+      "macro_f1": 0.3707495756276244,
+      "balanced_accuracy": 0.3478447824591317,
+      "low_bad_recall": 0.16176470588235295,
+      "low_bad_pr_auc": 0.23846726900475,
+      "brier_score": 0.527252903152759
+    },
+    {
+      "Part": "Yeast - BRN",
+      "rows": 800,
+      "batches": 23,
+      "accuracy": 0.54125,
+      "macro_f1": 0.3103147882591738,
+      "balanced_accuracy": 0.34703873856051115,
+      "low_bad_recall": 0.0,
+      "low_bad_pr_auc": 0.1408242239054749,
+      "brier_score": 0.5862096656811447
+    },
+    {
+      "Part": "Yeast - FMX",
+      "rows": 1067,
+      "batches": 45,
+      "accuracy": 0.7966260543580131,
+      "macro_f1": 0.3482835305310228,
+      "balanced_accuracy": 0.3513291482600946,
+      "low_bad_recall": 0.0,
+      "low_bad_pr_auc": 0.049928360184641016,
+      "brier_score": 0.3512379852454248
+    }
+  ],
+  "approvers": [
+    "Nguyễn Huy Hoàng Việt (10499509)",
+    "Huỳnh Quốc Hiếu (104848408)",
+    "Vũ Bá Hiển (104995634)"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "model": "random_forest_balanced",
+  "validation_multiclass_brier_score": 0.48648695898336275,
+  "validation_log_loss": 0.8098423055088215,
+  "one_vs_rest_expected_calibration_error_10_quantile_bins": {
+    "good": 0.07882671447750984,
+    "low_bad": 0.03889742539314075,
+    "high_bad": 0.05435451708568628
+  },
+  "note": "Validation reliability assessment only; not a calibration transform. Do not display probabilities as calibrated without further evidence."
+}

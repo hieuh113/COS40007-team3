@@ -1,0 +1,4 @@
+tier,threshold,flagged_rows,true_positives,false_positives,false_negatives,low_bad_precision,low_bad_recall,low_bad_batches_with_at_least_one_hit
+primary_argmax,argmax,2,1,1,627,0.5,0.0015923566878980893,1/21
+advisory_elevated_alert_ge_0.25,0.25,53,35,18,593,0.660377358490566,0.05573248407643312,4/21
+advisory_watch_ge_0.15,0.15,263,104,159,524,0.39543726235741444,0.16560509554140126,6/21

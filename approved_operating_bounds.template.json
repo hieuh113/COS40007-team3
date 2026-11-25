@@ -1,0 +1,72 @@
+{
+  "FFTE Feed solids SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  },
+  "FFTE Production solids SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  },
+  "FFTE Steam pressure SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  },
+  "TFE Out flow SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  },
+  "TFE Production solids SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  },
+  "TFE Vacuum pressure SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  },
+  "TFE Steam pressure SP": {
+    "min": null,
+    "max": null,
+    "unit": "PENDING_EXPERT_CONFIRMATION",
+    "source": "",
+    "authorized": false,
+    "confirmed_by": "",
+    "confirmation_date": "",
+    "notes": "Replace null and fill expert provenance before the SP ranking gate can open."
+  }
+}
