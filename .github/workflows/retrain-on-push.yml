@@ -1,0 +1,83 @@
+name: Automated Retraining & Drift Monitoring Pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "src/**"
+      - "dvc.yaml"
+      - ".github/workflows/retrain-on-push.yml"
+  schedule:
+    # Weekly automated drift monitoring & model retraining every Sunday at 00:00 UTC
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+    inputs:
+      force_retrain:
+        description: "Force model retraining even if drift is below threshold"
+        required: false
+        default: "true"
+
+jobs:
+  retrain_and_monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 2. Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 3. Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-mlops-${{ hashFiles('requirements-theme3.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-mlops-
+
+      - name: 4. Install MLOps & DVC dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-theme3.txt scipy dvc
+
+      - name: 5. Detect incoming data & verify DVC pipeline configuration
+        run: |
+          echo "Checking incoming data batch in data/new_data.csv..."
+          ls -lh data/new_data.csv
+          dvc status || true
+
+      - name: 6. Run Preprocessing on new data (Stage 1)
+        run: python src/preprocess_new_data.py
+
+      - name: 7. Run Drift & Data Quality Monitoring (Stage 2)
+        run: python src/monitor.py
+
+      - name: 8. Run Automated Model Retraining (Stage 3)
+        run: python src/model.py
+
+      - name: 9. Run Post-Retraining Evaluation & HTML Dashboard Generation (Stage 4)
+        run: python src/evaluate.py
+
+      - name: 10. Upload MLOps Monitoring & Retraining Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlops-retraining-and-monitoring-artifacts
+          path: |
+            artifacts/metrics/training_history.json
+            artifacts/metrics/evaluation_metrics.json
+            artifacts/metrics/monitoring_metrics.json
+            artifacts/metadata/data_version.txt
+            artifacts/metadata/model_version.txt
+            artifacts/metadata/last_retrain.txt
+            artifacts/preprocessing/feature_columns.json
+            reports/drift_report.json
+            reports/performance_report.html
+            reports/monitoring_dashboard.html
+            monitoring/alerts/latest_alert.json
+            logs/training.log
+            logs/monitoring.log
+            logs/drift_detection.log
