@@ -1,0 +1,5 @@
+[core]
+    remote = origin
+    autostage = true
+['remote "origin"']
+    url = https://dagshub.com/hieuh113/COS40007-team3.dvc

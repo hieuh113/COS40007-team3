@@ -1,0 +1,29 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess_new_data.py
+    deps:
+    - path: data/new_data.csv
+      md5: 53db9657a2298612930e8ec8805a7b04
+      size: 109555
+    - path: src/preprocess_new_data.py
+      md5: 6f0203ce26b1dce216dbef42aa2d6ef8
+      size: 6347
+  monitor_drift:
+    cmd: python src/monitor.py
+    deps:
+    - path: src/monitor.py
+      md5: aa8d72f8c348ee5ed5bd1d42713dfea4
+      size: 12699
+  retrain_model:
+    cmd: python src/model.py
+    deps:
+    - path: src/model.py
+      md5: a983e28bf4b93741d29f7592b7d2b8e2
+      size: 5292
+  evaluate_model:
+    cmd: python src/evaluate.py
+    deps:
+    - path: src/evaluate.py
+      md5: 8e13002f3ae318e68d1f963bc3caede4
+      size: 8741

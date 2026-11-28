@@ -1,0 +1,68 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess_new_data.py
+    deps:
+      - src/preprocess_new_data.py
+      - data/new_data.csv
+      - data/reference_train.csv
+      - data/holdout_eval.csv
+    outs:
+      - artifacts/data/X_train.npy
+      - artifacts/data/y_train.npy
+      - artifacts/data/X_test.npy
+      - artifacts/data/y_test.npy
+      - artifacts/data/X_new.npy
+      - artifacts/data/y_new.npy
+      - artifacts/preprocessing/feature_columns.json
+      - artifacts/preprocessing/scaler.pkl
+      - artifacts/preprocessing/encoder.pkl
+      - artifacts/metadata/data_version.txt
+
+  monitor_drift:
+    cmd: python src/monitor.py
+    deps:
+      - src/monitor.py
+      - artifacts/data/X_train.npy
+      - artifacts/data/X_new.npy
+      - artifacts/preprocessing/feature_columns.json
+    outs:
+      - reports/drift_report.json
+      - reports/monitoring_dashboard.html
+      - monitoring/reports/drift_report.json
+      - monitoring/reports/monitoring_dashboard.html
+    metrics:
+      - artifacts/metrics/monitoring_metrics.json:
+          cache: false
+
+  retrain_model:
+    cmd: python src/model.py
+    deps:
+      - src/model.py
+      - artifacts/data/X_train.npy
+      - artifacts/data/y_train.npy
+      - artifacts/data/X_new.npy
+      - artifacts/data/y_new.npy
+      - artifacts/preprocessing/feature_columns.json
+    outs:
+      - artifacts/models/model.joblib
+      - artifacts/models/model.keras
+      - artifacts/metadata/model_version.txt
+      - artifacts/metadata/last_retrain.txt
+    metrics:
+      - artifacts/metrics/training_history.json:
+          cache: false
+
+  evaluate_model:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - artifacts/models/model.joblib
+      - artifacts/data/X_train.npy
+      - artifacts/data/y_train.npy
+      - artifacts/data/X_test.npy
+      - artifacts/data/y_test.npy
+    outs:
+      - reports/performance_report.html
+    metrics:
+      - artifacts/metrics/evaluation_metrics.json:
+          cache: false
