@@ -1,0 +1,1 @@
+[2026-11-28 12:34:16] [DRIFT] Scanned 30 features on 387 incoming rows: drifted=26 (86.7%), ood_features=0, retrain_triggered=True.

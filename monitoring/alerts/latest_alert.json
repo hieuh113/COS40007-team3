@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-11-28T12:34:16",
+  "severity": "HIGH",
+  "alert_type": "DATA_AND_SENSOR_DRIFT_DETECTED",
+  "message": "Drift threshold exceeded: 26/30 features drifted (86.7%) and 0 features contain out-of-domain values.",
+  "top_drifted_features": [
+    "FFTE Heat temperature 1",
+    "TFE Out flow SP",
+    "TFE Production solids density",
+    "FFTE Production solids SP",
+    "FFTE Heat temperature 3"
+  ],
+  "action": "TRIGGER_AUTOMATED_RETRAINING"
+}

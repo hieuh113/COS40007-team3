@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-11-28T12:34:59",
+  "model_version": "v2.0-rf300-20261128123459",
+  "model_type": "RandomForestClassifier (n_estimators=300, balanced_subsample)",
+  "retrain_mode": "INCREMENTAL_RETRAIN_WITH_NEW_DATA",
+  "reference_rows": 19809,
+  "new_rows_merged": 387,
+  "total_training_rows": 20196,
+  "metrics": {
+    "train_accuracy": 0.9973,
+    "train_macro_f1": 0.9967,
+    "train_balanced_accuracy": 0.9982,
+    "train_log_loss": 0.0574,
+    "oob_accuracy": 0.9832
+  },
+  "top_10_feature_importances": [
+    {
+      "feature": "TFE Out flow SP",
+      "importance": 0.0911
+    },
+    {
+      "feature": "FFTE Heat temperature 1",
+      "importance": 0.0759
+    },
+    {
+      "feature": "FFTE Discharge density",
+      "importance": 0.074
+    },
+    {
+      "feature": "FFTE Heat temperature 3",
+      "importance": 0.0615
+    },
+    {
+      "feature": "TFE Production solids density",
+      "importance": 0.0568
+    },
+    {
+      "feature": "FFTE Heat temperature 2",
+      "importance": 0.0473
+    },
+    {
+      "feature": "FFTE Steam pressure SP",
+      "importance": 0.0444
+    },
+    {
+      "feature": "FFTE Feed flow rate PV",
+      "importance": 0.0422
+    },
+    {
+      "feature": "Extract tank Level",
+      "importance": 0.0406
+    },
+    {
+      "feature": "FFTE Discharge solids",
+      "importance": 0.0403
+    }
+  ]
+}

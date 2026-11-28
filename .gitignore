@@ -16,7 +16,13 @@ Theme3/Weekly Data 18_05_20 - 22_05_20/
 Theme3/Processed_Data/*
 !Theme3/Processed_Data/.gitignore
 
-# Large archives / nested git workspaces
+# Large archives / nested git workspaces / binary model weights tracked via DVC
 course_submissions/Week8/github-pipeline-setup-main/
 course_submissions/Week8/github-pipeline-setup-main.zip
 archive.zip
+artifacts/models/*.joblib
+artifacts/models/*.keras
+artifacts/data/*.npy
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local

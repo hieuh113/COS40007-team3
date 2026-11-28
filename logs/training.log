@@ -1,0 +1,4 @@
+[2026-11-28 12:34:12] [PREPROCESS] Loaded Theme3/Processed_Data (Full Local Split): train=19809 rows, eval=3450 rows, new_data=387 rows (deduplicated=0, missing_imputed=0).
+[2026-11-28 12:34:22] [TRAIN] Retrained v2.0-rf300-20261128123422 (INCREMENTAL_RETRAIN_WITH_NEW_DATA) on 20196 rows. Train Macro-F1=0.9967, OOB Acc=0.9832. Saved artifacts/models/model.joblib.
+[2026-11-28 12:34:27] [EVALUATE] Evaluated v2.0-rf300-20261128123422 on 3450 holdout rows: Macro-F1=0.4777 (Baseline=0.4793, Delta=-0.0016), Accuracy=0.6617.
+[2026-11-28 12:35:01] [TRAIN] Retrained v2.0-rf300-20261128123459 (INCREMENTAL_RETRAIN_WITH_NEW_DATA) on 20196 rows. Train Macro-F1=0.9967, OOB Acc=0.9832. Saved artifacts/models/model.joblib.

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>COS40007 Theme 3 — MLOps Retraining Performance Report</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 24px; background: #f8fafc; color: #0f172a; }
+  .header { background: #0f172a; color: white; padding: 20px 24px; border-radius: 8px; margin-bottom: 20px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  .card { background: white; padding: 16px 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #16a34a; }
+  .card h3 { margin: 0 0 8px 0; font-size: 13px; color: #64748b; text-transform: uppercase; }
+  .card .val { font-size: 22px; font-weight: 700; color: #0f172a; }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 20px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+  th { background: #f1f5f9; font-weight: 600; color: #334155; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1 style="margin:0 0 6px 0;font-size:22px;">COS40007 Theme 3 — Post-Retraining Performance Report</h1>
+    <div style="font-size:13px;color:#cbd5e1;">Model Version: v2.0-rf300-20261128123422 | Evaluated at: 2026-11-28T12:34:27 | Holdout Rows: 3,450</div>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>Holdout Accuracy</h3><div class="val">0.6617 (+0.0037)</div></div>
+    <div class="card"><h3>Holdout Macro-F1</h3><div class="val">0.4777 (-0.0016)</div></div>
+    <div class="card"><h3>Balanced Accuracy</h3><div class="val">0.4791</div></div>
+    <div class="card"><h3>Multiclass Brier / LogLoss</h3><div class="val">0.4720 / 0.7839</div></div>
+  </div>
+  <h3>Per-Class Comparison (Baseline Before Retrain &rarr; Retrained Model)</h3>
+  <table>
+    <thead>
+      <tr><th>Quality Class</th><th>Support</th><th>Precision (Base &rarr; New)</th><th>Recall (Base &rarr; New)</th><th>F1-Score (Base &rarr; New)</th><th>PR-AUC (Base &rarr; New)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>good</strong></td><td>1757</td><td>0.6506 &rarr; <strong>0.6545</strong></td><td>0.7769 &rarr; <strong>0.7678</strong></td><td>0.7082 &rarr; <strong>0.7067</strong></td><td>0.6729 &rarr; <strong>0.6892</strong></td></tr><tr><td><strong>high_bad</strong></td><td>1471</td><td>0.6687 &rarr; <strong>0.6722</strong></td><td>0.6077 &rarr; <strong>0.6288</strong></td><td>0.6368 &rarr; <strong>0.6498</strong></td><td>0.6744 &rarr; <strong>0.7116</strong></td></tr><tr><td><strong>low_bad</strong></td><td>222</td><td>0.7333 &rarr; <strong>0.6923</strong></td><td>0.0495 &rarr; <strong>0.0405</strong></td><td>0.0928 &rarr; <strong>0.0766</strong></td><td>0.1248 &rarr; <strong>0.1863</strong></td></tr>
+    </tbody>
+  </table>
+</body>
+</html>
