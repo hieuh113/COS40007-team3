@@ -206,6 +206,52 @@ python verify_demonstrator_theme3.py
 
 ---
 
-## 8. Note on GitHub Actions CI (`model.py` & `.github/workflows/train.yml`)
+## 8. Applied Project Task 3 — Automated Retraining, Drift Monitoring & DVC Pipeline
 
-The root files `.github/workflows/train.yml`, `model.py`, and `requirements.txt` are preserved for backward compatibility with **Applied Project Group Task 2 (Week 8 GitHub Actions Pipeline)**. All **Theme 3 Vegemite** source code, documentation, and evaluation artifacts are maintained in the `*_theme3*.py` scripts, `docs/`, and `reports/`.
+In compliance with **Studio Activity 9 (Scaling & Monitoring AI Systems)**, the repository implements an end-to-end automated MLOps pipeline with **DVC** (`dvc.yaml`, `dvc.lock`, `.dvc/config`) and **GitHub Actions** (`.github/workflows/retrain-on-push.yml`):
+
+```text
+├── .github/workflows/
+│   ├── retrain-on-push.yml               # Multi-trigger MLOps workflow (push, schedule cron, workflow_dispatch)
+│   └── train.yml                         # Group Task 2 baseline CI workflow
+├── .dvc/config                           # DVC remote storage configuration (DagsHub remote)
+├── dvc.yaml & dvc.lock                   # 4-stage DVC pipeline (preprocess -> monitor_drift -> retrain_model -> evaluate_model)
+├── src/
+│   ├── preprocess_new_data.py            # Stage 1: Validate & scale incoming data/new_data.csv
+│   ├── monitor.py                        # Stage 2: 30-feature KS-test, PSI & Out-of-Domain drift detection
+│   ├── model.py                          # Stage 3: Automated incremental Random Forest retraining
+│   └── evaluate.py                       # Stage 4: A/B holdout evaluation & HTML report generation
+├── data/
+│   ├── new_data.csv                      # Incoming production batch data triggering auto-retraining
+│   ├── reference_train.csv               # Stratified reference training batches for CI
+│   └── holdout_eval.csv                  # Stratified holdout evaluation batches for CI
+├── artifacts/                            # Centralized MLOps storage (models/, data/, preprocessing/, metrics/, metadata/)
+├── monitoring/                           # Monitoring reports, logs, and drift alert history (alerts/latest_alert.json)
+├── logs/                                 # training.log, monitoring.log, drift_detection.log
+└── reports/
+    ├── drift_report.json                 # Latest 30-feature KS/PSI drift report
+    ├── monitoring_dashboard.html         # Interactive HTML drift & data quality dashboard
+    └── performance_report.html           # Interactive HTML post-retraining performance comparison
+```
+
+### Running the MLOps Pipeline Locally or via DVC
+```bash
+# Run via DVC
+dvc repro
+
+# Or run the 4 stages sequentially
+python src/preprocess_new_data.py
+python src/monitor.py
+python src/model.py
+python src/evaluate.py
+```
+
+### Live Demo: Triggering Automated Retraining on GitHub Actions
+To trigger the automated retraining pipeline on GitHub Actions during a live demonstration:
+```bash
+# 1. Update or copy new batch observations into data/new_data.csv
+git add data/new_data.csv
+git commit -m "feat(data): add new production batch observations for automated retraining"
+git push origin main
+```
+GitHub Actions will automatically detect the push to `data/new_data.csv`, run preprocessing, evaluate feature drift across all 30 SP/PV parameters, retrain the Random Forest quality classifier, and upload the updated `monitoring_dashboard.html`, `performance_report.html`, `drift_report.json`, and model metrics as downloadable workflow artifacts.
